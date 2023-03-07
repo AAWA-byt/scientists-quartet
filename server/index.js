@@ -27,7 +27,7 @@ socketIO.on('connection', (socket) => {
 // test return for api
 app.get('/api', (req, res) => {
   res.json({
-    message: 'Hello world',
+    message: 'Hello World',
   });
 });
 
