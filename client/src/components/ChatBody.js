@@ -30,7 +30,7 @@ const ChatBody = ({messages, typingStatus, lastMessageRef}) => {
             </div>
           ): (
             <div className="message__chats" key={message.id}>
-              <p>{message.name}</p>
+              <p className='sender__name'>{message.name}</p>
               <div className='message__recipient'>
                 <p>{message.text}</p>
               </div>
