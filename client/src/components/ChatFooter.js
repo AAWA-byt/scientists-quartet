@@ -46,4 +46,3 @@ const ChatFooter = ({ socket }) => {
 };
 
 export default ChatFooter;
-
