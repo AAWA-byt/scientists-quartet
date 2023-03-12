@@ -14,8 +14,8 @@ const ChatBody = ({messages, typingStatus, lastMessageRef}) => {
   return (
     <>
       <header className='chat__mainHeader'>
-        <p>Chat made with socket.io</p>
-        <button className='leaveChat__btn' onClick={handleLeaveChat}>LEAVE CHAT</button>
+        <p>Made with socket.io</p>
+        <button className='leaveChat__btn' onClick={handleLeaveChat}>LEAVE GAME</button>
       </header>
 
       <div className='message__container'>
