@@ -37,6 +37,7 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
     socketIO.emit('newUserResponse', users); // Broadcast the updated array of users to all connected clients
     socket.disconnect(); // Disconnect the socket
   });
+  
 });
 
 // test return for api
