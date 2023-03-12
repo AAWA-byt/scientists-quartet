@@ -30,7 +30,7 @@ const ChatFooter = ({ socket }) => {
       <form className="form" onSubmit={handleSendMessage}>
         {/* Input for message */}
         <input
-          type="text"
+          type="textarea"
           placeholder="Write message"
           className="message"
           value={message}
@@ -38,8 +38,8 @@ const ChatFooter = ({ socket }) => {
           // Event listener for the onKeyDown event to emit typing status
           onKeyDown={handleTyping}
         />
-        {/* Button to send message */}
-        <button className="sendBtn">SEND</button>
+        {/* Button to send message
+        <button className="sendBtn">SEND</button> */}
       </form>
     </div>
   );
