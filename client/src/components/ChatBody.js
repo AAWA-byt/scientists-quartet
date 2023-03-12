@@ -37,11 +37,13 @@ const ChatBody = ({messages, typingStatus, lastMessageRef}) => {
             </div>
           )
         ))}
-
-        {/* Display the typing status */}
+        
+        {/*
+        // Display the typing status 
         <div className='message__status'>
           <p>{typingStatus}</p>
         </div>
+        */}
 
         {/* This empty div is used as a reference to scroll to the last message */}
         <div ref={lastMessageRef} />   
