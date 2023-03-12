@@ -19,7 +19,7 @@ function App() {
           {/* Render the Home component when the path is "/" and pass the socket object as a prop */} 
           <Route path="/" element={<Home socket={socket} />}></Route>
           {/* Render the ChatPage component when the path is "/chat" and pass the socket object as a prop */}
-          <Route path="/chat" element={<ChatPage socket={socket} />}></Route>
+          <Route path="/game" element={<ChatPage socket={socket} />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
