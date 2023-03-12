@@ -8,6 +8,7 @@ body {
   background-color: rgb(55, 60, 63);
   padding: 5px 5px 5px 20px;
   margin-bottom: 10px;
+  width: 30vh;
 }
 
 .chat__users {
@@ -18,14 +19,16 @@ body {
   background-color: rgb(55, 60, 63);
   padding: 5px 5px 10px 20px;
   margin-bottom: 10px;
+  width: 30vh;
 }
 
 .message__container {
   background-color: rgb(55, 60, 63);
   padding: 10px 20px 5px 20px;
   height: 50vh;
-  padding: 20px;
+  margin-bottom: 10px;
   overflow-y: scroll;
+  width: 30vh;
 
 }
 
@@ -39,5 +42,30 @@ body {
   font-size: smaller;
   color: rgba(253, 252, 252, 0.685);
 }
+
+.chat__footer {
+  background-color: rgb(55, 60, 63);
+  padding: 15px 5px 15px 20px;
+  width: 30vh;
+}
+
+.chat__footer input {
+  width: 28vh;
+  color:rgb(255, 255, 255);
+  border: 2.9px solid rgb(119, 122, 124);
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 2px;
+  background-color: transparent;
+  transition: all 0.3s;
+  padding: 13px;
+  box-sizing: border-box;
+  outline:0;
+}
+
+.chat__footer input:focus {
+  border: 2.9px solid rgb(146, 148, 150);
+
+}
+
 
 
