@@ -32,6 +32,10 @@ const ChatPage = ({ socket }) => {
     // Render the ChatBar, ChatBody, and ChatFooter components along with their respective props
     return (
         <div className="chat-wrapper">
+            <div className="cards">
+                {/* Code for card deck #TODO */}
+                <Cards socket={socket}/>
+            </div>
             <div className="chat">
                 <ChatBar socket={socket} />
                 <div className="chat__main">
@@ -42,10 +46,6 @@ const ChatPage = ({ socket }) => {
                     />
                     <ChatFooter socket={socket} />
                 </div>
-            </div>
-            <div className="cards">
-                {/* Code for card deck #TODO */}
-                <Cards socket={socket}/>
             </div>
         </div>
     );
