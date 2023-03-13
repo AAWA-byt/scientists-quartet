@@ -30,15 +30,20 @@ const ChatPage = ({ socket }) => {
 
     // Render the ChatBar, ChatBody, and ChatFooter components along with their respective props
     return (
-        <div className="chat">
-            <ChatBar socket={socket} />
-            <div className="chat__main">
-                <ChatBody
-                    messages={messages}
-                    typingStatus={typingStatus}
-                    lastMessageRef={lastMessageRef}
-                />
-                <ChatFooter socket={socket} />
+        <div className="chat-wrapper">
+            <div className="chat">
+                <ChatBar socket={socket} />
+                <div className="chat__main">
+                    <ChatBody
+                        messages={messages}
+                        typingStatus={typingStatus}
+                        lastMessageRef={lastMessageRef}
+                    />
+                    <ChatFooter socket={socket} />
+                </div>
+            </div>
+            <div className="cards">
+                {/* Code for card deck #TODO */}
             </div>
         </div>
     );
