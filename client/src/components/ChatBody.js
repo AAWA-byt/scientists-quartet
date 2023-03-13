@@ -14,8 +14,8 @@ const ChatBody = ({messages, typingStatus, lastMessageRef}) => {
   return (
     <>
       <header className='chat__mainHeader'>
-        <p>Made with socket.io</p>
-        <button className='leaveChat__btn' onClick={handleLeaveChat}>LEAVE GAME</button>
+        <p><i>"Imagination is more important than knowledge."</i></p>
+        <button>Albert Einstein</button>
       </header>
 
       <div className='message__container'>
