@@ -1,9 +1,10 @@
 // Import the required React components from the "react" library
 import React, { useEffect, useState, useRef } from 'react';
-// Import the ChatBar, ChatBody, and ChatFooter components from their respective files
+// Import the ChatBar, ChatBody, ChatFooter and Cards components from their respective files
 import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
+import Cards from './Cards';
 
 // Define a functional component called "ChatPage" and pass the "socket" object as a prop
 const ChatPage = ({ socket }) => {
@@ -44,6 +45,7 @@ const ChatPage = ({ socket }) => {
             </div>
             <div className="cards">
                 {/* Code for card deck #TODO */}
+                <Cards socket={socket}/>
             </div>
         </div>
     );
