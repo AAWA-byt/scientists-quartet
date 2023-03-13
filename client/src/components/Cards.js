@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
+
 
 // define a functional component Cards that takes props
 const Cards = ({ socket }) => {
     // use state hook to initialize users state to an empty array
     const [users, setUsers] = useState([]);
 
+    const navigate = useNavigate()
+
+
     // useEffect hook to listen for 'newUserResponse' event from socket and update users state accordingly
     useEffect(() => {
         socket.on('newUserResponse', (data) => setUsers(data));
     }, [socket, users]);
+
+    // This function is called when the "LEAVE CHAT" button is clicked
+    const handleLeaveChat = () => {
+        localStorage.removeItem("userName") // Remove the "userName" item from localStorage
+        navigate("/") // Navigate to the home page
+        window.location.reload() // Reload the page to reset the chat
+    }
 
     // render a div containing a header, user count and game status
     return (
@@ -24,7 +36,7 @@ const Cards = ({ socket }) => {
         </div>
             <header className='chat__mainHeader'>
                 <p>Made with socket.io</p>
-                <button className='leaveChat__btn' >LEAVE GAME</button>
+                <button className='leaveChat__btn' onClick={handleLeaveChat}>LEAVE GAME</button>
             </header>
 
             <div className='message__container'>
@@ -32,16 +44,7 @@ const Cards = ({ socket }) => {
             </div>
 
             <div className="chat__footer">
-                <form className="form">
-                    {/* Input for message */}
-                    <input
-                        type="textarea"
-                        placeholder="Write message"
-                        className="message"
-                    // Event listener for the onKeyDown event to emit typing status
-                    />
-
-                </form>
+                <p><b>Your Cards:</b> xx, <b>Turn:</b> xxxxx</p>
             </div>
         </>
     );
