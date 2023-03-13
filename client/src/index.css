@@ -6,7 +6,15 @@ body {
 
 .chat-wrapper {
   display: flex;
-  
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat {
+  margin-left: 10px;
 }
 
 .chat__sidebar {
@@ -52,6 +60,7 @@ body {
   background-color: rgb(55, 60, 63);
   padding: 15px 5px 15px 20px;
   width: 45vh;
+  margin-bottom: 10px;
 }
 
 .chat__footer input {
@@ -73,7 +82,26 @@ body {
 }
 
 .cards {
-  margin-left: 10px;
+
+}
+
+@media screen and (max-width: 1200px)  {
+  .chat-wrapper {
+    display: flex;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }  
+
+  .cards {
+    margin-top: 10px;
+  }
+
+  .chat {
+    margin-left: 0px;
+  }
 }
 
 
