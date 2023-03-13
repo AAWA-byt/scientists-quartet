@@ -13,7 +13,7 @@ body {
   background-color: rgb(55, 60, 63);
   padding: 5px 5px 5px 20px;
   margin-bottom: 10px;
-  width: 30vh;
+  width: 45vh;
 }
 
 .chat__users {
@@ -24,7 +24,7 @@ body {
   background-color: rgb(55, 60, 63);
   padding: 5px 5px 10px 20px;
   margin-bottom: 10px;
-  width: 30vh;
+  width: 45vh;
 }
 
 .message__container {
@@ -33,7 +33,7 @@ body {
   height: 50vh;
   margin-bottom: 10px;
   overflow-y: scroll;
-  width: 30vh;
+  width: 43.9vh;
 
 }
 
@@ -51,11 +51,11 @@ body {
 .chat__footer {
   background-color: rgb(55, 60, 63);
   padding: 15px 5px 15px 20px;
-  width: 30vh;
+  width: 45vh;
 }
 
 .chat__footer input {
-  width: 28vh;
+  width: 43vh;
   color:rgb(255, 255, 255);
   border: 2.9px solid rgb(119, 122, 124);
   font-family: Arial, Helvetica, sans-serif;
@@ -70,6 +70,10 @@ body {
 .chat__footer input:focus {
   border: 2.9px solid rgb(146, 148, 150);
 
+}
+
+.cards {
+  margin-left: 10px;
 }
 
 
