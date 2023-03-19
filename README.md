@@ -75,5 +75,5 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 See the [LICENSE.md](https://github.com/AAWA-byt/physiker-quartet/blob/main/LICENSE.md) file for details.
 
-# Author
+# :construction_worker: Author
 - [AAWA-byt](www.github.com/AAWA-byt) - Aaron Wagner
