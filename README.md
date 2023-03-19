@@ -65,4 +65,13 @@ You are always welcome to create a [pull request](https://github.com/AAWA-byt/ph
 If you want to report a bug or request a new feature, feel free to open a [new issue](https://github.com/AAWA-byt/physiker-quartet/issues). 
 
 # :memo: License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/AAWA-byt/physiker-quartet/blob/main/LICENSE.md) file for details.
+Copyright 2023 - Aaron Wagner
+
+This project is licensed under the MIT License. 
+
+The MIT License is a permissive software license that allows the user to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software without restriction, subject to certain conditions. The conditions include including a copy of the license in the distribution and the inclusion of the copyright notice in all copies or substantial portions of the software.
+
+See the [LICENSE.md](https://github.com/AAWA-byt/physiker-quartet/blob/main/LICENSE.md) file for details.
+
+# Author
+
