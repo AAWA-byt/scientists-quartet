@@ -62,7 +62,7 @@ You are always welcome to create a [pull request](https://github.com/AAWA-byt/ph
 
 ### Bug Reports / Feature Requests
 
-If you want to report a bug or request a new feature, feel free to open a [new issue](https://github.com/AAWA-byt/physiker-quartet/issues). 
+If you want to report a bug or request a new feature, feel free to open a new [issue](https://github.com/AAWA-byt/physiker-quartet/issues). 
 
 # :memo: License
 Copyright 2023 - Aaron Wagner
