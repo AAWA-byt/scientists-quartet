@@ -17,3 +17,18 @@ If two cards have the same value, a draw is made. In this case, both cards are p
 - User list & user count
 - User limit
 - Responsive design
+
+## :wrench: How to install
+- Clone the source code with the following command
+```
+git clone https://github.com/AAWA-byt/physiker-quartet.git
+```
+- In the ```./client``` folder you run the following commands
+```
+# Install all required packages
+npm i
+
+# Build project to serve it to a static server
+npm run build
+```
+
