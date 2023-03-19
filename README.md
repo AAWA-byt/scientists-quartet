@@ -19,6 +19,16 @@ If two cards have the same value, a draw is made. In this case, both cards are p
 - Responsive design
 
 ## :wrench: How to install
+
+### :package: Requirements 
+- [Node.js](https://nodejs.org/en/download)
+- [npm](https://docs.npmjs.com/cli/)
+- [Git](https://git-scm.com/downloads)
+- [pm2](https://pm2.keymetrics.io/)
+- [Docker](https://docs.docker.com/)
+
+### :page_facing_up: Procedure
+
 - Clone the source code with the following command
 ```
 git clone https://github.com/AAWA-byt/physiker-quartet.git
@@ -38,7 +48,7 @@ npm run build
 # Install all required packages
 npm i
 
-# Start backend server
+# Start backend server for testing
 npm start
 ```
 - For running the backend server in the background execute the following command after installing the packages
