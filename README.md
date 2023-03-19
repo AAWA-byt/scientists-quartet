@@ -74,4 +74,4 @@ The MIT License is a permissive software license that allows the user to use, co
 See the [LICENSE.md](https://github.com/AAWA-byt/physiker-quartet/blob/main/LICENSE.md) file for details.
 
 # Author
-
+- [AAWA-byt](www.github.com/AAWA-byt) - Aaron Wagner
