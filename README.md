@@ -56,10 +56,13 @@ npm start
 pm2 index.js
 ```
 
-## :construction: Contribute
+# :construction: Contribute
 ### Pull Request
 You are always welcome to create a [pull request](https://github.com/AAWA-byt/physiker-quartet/pulls). I will look at it as soon as possible. 
 
 ### Bug Reports / Feature Requests
 
 If you want to report a bug or request a new feature, feel free to open a [new issue](https://github.com/AAWA-byt/physiker-quartet/issues). 
+
+# :memo: License
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/AAWA-byt/physiker-quartet/blob/main/LICENSE.md) file for details.
