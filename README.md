@@ -29,12 +29,12 @@ If two cards have the same value, a draw is made. In this case, both cards are p
 
 ### :page_facing_up: Procedure
 
-- Clone the source code with the following command
+- Clone the source code with the following command:
 ```
 git clone https://github.com/AAWA-byt/physiker-quartet.git
 ```
 - Edit the config file ```./server/config.json``` as you need it 
-- In the ```./client``` folder you run the following commands
+- In the ```./client``` folder you run the following commands:
 ```
 # Install all required packages
 npm i
@@ -43,7 +43,7 @@ npm i
 npm run build
 ```
 - Now deploy the files from the ```build``` folder to a static server
-- After deploying the files, you go back to the ```./config``` folder and the following commands
+- After deploying the files, you go back to the ```./config``` folder and the following commands:
 ```
 # Install all required packages
 npm i
@@ -51,7 +51,7 @@ npm i
 # Start backend server for testing
 npm start
 ```
-- For running the backend server in the background execute the following command after installing the packages
+- For running the backend server in the background execute the following command after installing the packages:
 ```
 pm2 index.js
 ```
