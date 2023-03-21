@@ -1,15 +1,14 @@
 import React from 'react'
-import {useNavigate} from "react-router-dom"
 
 const ChatBody = ({messages, typingStatus, lastMessageRef}) => { 
-  const navigate = useNavigate()
-  
+  /*  
   // This function is called when the "LEAVE CHAT" button is clicked
   const handleLeaveChat = () => {
     localStorage.removeItem("userName") // Remove the "userName" item from localStorage
     navigate("/") // Navigate to the home page
     window.location.reload() // Reload the page to reset the chat
   }
+  */
   
   return (
     <>
