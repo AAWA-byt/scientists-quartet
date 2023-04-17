@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
+import albert_einstein from "../assets/albert_einstein.jpg"
 
 
 // define a functional component Cards that takes props
@@ -24,26 +25,38 @@ const Cards = ({ socket }) => {
 
     // render a div containing a header, user count and game status
     return (
-        <><div className="chat__sidebar">
+        <><div className="cards__sidebar">
             <h2>Physiker Quartett</h2>
             <div>
-                <h4 className="chat__header">INFORMATIONS</h4>
-                <div className="chat__users">
+                <h4 className="cards__header">INFORMATIONS</h4>
+                <div className="cards__users">
                     <p id='playercount'><b>Players:</b> {users.length}/2</p>
                     <p id='gamestatus'><b>Gamestatus:</b> waiting</p>
                 </div>
             </div>
         </div>
-            <header className='chat__mainHeader'>
+            <header className='cards__mainHeader'>
                 <p>Made with socket.io</p>
                 <button className='leaveChat__btn' onClick={handleLeaveChat}>LEAVE GAME</button>
             </header>
 
-            <div className='message__container'>
+            <div className='cards__container'>
+                <h1>Aktuelle Karte</h1>
+                <div className='image_container'>
+                    <img src={albert_einstein} />
+                </div>
+                <div className='stats_container'>
+                    <p><b>Geburtsdatum:</b> xxx</p>
+                    <p><b>IQ:</b> xxx</p>
+                    <p><b>Auszeichnungen:</b> xxx</p>
+                    <p><b>Einfluss:</b> xxx</p>
+                    <p><b>Vermögen:</b> xxx</p>
+                    <p><b>Wikifaktor:</b> xxx</p>
+                </div>
 
             </div>
 
-            <div className="chat__footer">
+            <div className="cards__footer">
                 <p><b>Your Cards:</b> xx, <b>Turn:</b> xxxxx</p>
             </div>
         </>
