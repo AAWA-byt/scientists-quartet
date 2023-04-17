@@ -58,8 +58,9 @@ body {
 
 .chat__footer {
   background-color: rgb(55, 60, 63);
-  padding: 15px 5px 15px 20px;
+  padding: 15px 5px 30px 15px;
   width: 45vh;
+  height: 4vh;
   margin-bottom: 10px;
 }
 
