@@ -5,6 +5,7 @@ import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
 import Cards from './Cards';
+import Footer from './FooterPage';
 
 // Define a functional component called "ChatPage" and pass the "socket" object as a prop
 const ChatPage = ({ socket }) => {
@@ -31,10 +32,10 @@ const ChatPage = ({ socket }) => {
 
     // Render the ChatBar, ChatBody, and ChatFooter components along with their respective props
     return (
-        <div className="chat-wrapper">
+        <><div className="chat-wrapper">
             <div className="cards">
                 {/* Code for card deck #TODO */}
-                <Cards socket={socket}/>
+                <Cards socket={socket} />
             </div>
             <div className="chat">
                 <ChatBar socket={socket} />
@@ -42,12 +43,11 @@ const ChatPage = ({ socket }) => {
                     <ChatBody
                         messages={messages}
                         typingStatus={typingStatus}
-                        lastMessageRef={lastMessageRef}
-                    />
+                        lastMessageRef={lastMessageRef} />
                     <ChatFooter socket={socket} />
                 </div>
             </div>
-        </div>
+        </div><Footer /></>
     );
 };
 
