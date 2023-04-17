@@ -9,7 +9,7 @@ const Footer = () => {
                 <center>
                     <div class="container">
                         <div class="row">
-                            <h3>Lore Lorentz Schule</h3>
+                            <h3>Physiker Quartett</h3>
                             <ul>
                                 <li><a href="https://www.aaronwagner.de/impressum/">Impressum</a></li>
                                 <li><a href="https://github.com/AAWA-byt/physiker-quartet">Source Code</a></li>
