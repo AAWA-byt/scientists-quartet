@@ -251,8 +251,36 @@ body {
   margin-bottom: 10px;
 }
 
-img {
+.image_container img {
   width: 15vh;
   height: 20vh;
+}
+
+.cards__wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+
+.stats_container {
+  margin-left: 0x;
+}
+
+.image_container {
+  margin-right: 40px;
+  margin-left: 5px;
+}
+
+.stats_buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+
+.stats_buttons button {
+  margin-left: 10px;
 }
 
