@@ -42,18 +42,27 @@ const Cards = ({ socket }) => {
 
             <div className='cards__container'>
                 <h1>Aktuelle Karte</h1>
-                <div className='image_container'>
-                    <img src={albert_einstein} />
+                <div className='cards__wrapper'>
+                    <div className='image_container'>
+                        <img src={albert_einstein} alt="img" />
+                    </div>
+                    <div className='stats_container'>
+                        <p><b>Geburtsdatum:</b> xxx</p>
+                        <p><b>IQ:</b> xxx</p>
+                        <p><b>Auszeichnungen:</b> xxx</p>
+                        <p><b>Einfluss:</b> xxx</p>
+                        <p><b>Vermögen:</b> xxx</p>
+                        <p><b>Wikifaktor:</b> xxx</p>
+                    </div>
                 </div>
-                <div className='stats_container'>
-                    <p><b>Geburtsdatum:</b> xxx</p>
-                    <p><b>IQ:</b> xxx</p>
-                    <p><b>Auszeichnungen:</b> xxx</p>
-                    <p><b>Einfluss:</b> xxx</p>
-                    <p><b>Vermögen:</b> xxx</p>
-                    <p><b>Wikifaktor:</b> xxx</p>
+                <div className='stats_buttons'>
+                    <button>test</button>
+                    <button>test</button>
+                    <button>test</button>
+                    <button>test</button>
+                    <button>test</button>
+                    <button>test</button>
                 </div>
-
             </div>
 
             <div className="cards__footer">
