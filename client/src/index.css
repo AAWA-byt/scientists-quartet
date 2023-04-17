@@ -215,5 +215,44 @@ body {
   text-decoration: none;
 }
 
+.cards__sidebar {
+  background-color: rgb(55, 60, 63);
+  padding: 5px 5px 5px 20px;
+  margin-bottom: 10px;
+  width: 45vh;
+}
 
+.cards__users {
+  color: rgba(253, 252, 252, 0.685);
+}
+
+.cards__mainHeader {
+  background-color: rgb(55, 60, 63);
+  padding: 5px 5px 10px 20px;
+  margin-bottom: 10px;
+  width: 45vh;
+}
+
+.cards__container {
+  background-color: rgb(55, 60, 63);
+  padding: 10px 20px 5px 20px;
+  height: 50vh;
+  margin-bottom: 10px;
+  overflow-y: scroll;
+  width: 43.9vh;
+
+}
+
+.cards__footer {
+  background-color: rgb(55, 60, 63);
+  padding: 15px 5px 30px 15px;
+  width: 45vh;
+  height: 4vh;
+  margin-bottom: 10px;
+}
+
+img {
+  width: 15vh;
+  height: 20vh;
+}
 
