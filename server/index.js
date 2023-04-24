@@ -2,6 +2,7 @@
 const express = require('express'); // Import the express framework
 const app = express(); // Create a new instance of the express app
 const PORT = 4000; // Set the port number
+const { startGame } = require("./components/GameFunctions.js")
 
 // setup http server
 const http = require('http').Server(app); // Create a new HTTP server using the express app
@@ -18,8 +19,69 @@ const socketIO = require('socket.io')(http, { // Create a new socket.io instance
 // listener for connection to socket server
 let users = []; // Create an empty array to store the users
 
+// Physicist list
+let Physicist = [
+  {
+    name: "Albert Einstein",
+    photo: `https://cms-api.galileo.tv/app/uploads/2019/11/91370791.jpg`,
+    birth: 0,
+    iq: 0,
+    awards: 0,
+    influence: 0,
+    assets: 0,
+    wiki: 0,
+  },
+  {
+    name: "Isaac Newton",
+    photo: 3,
+    birth: 0,
+    iq: 0,
+    awards: 0,
+    influence: 0,
+    assets: 0,
+    wiki: 0,
+  },
+  {
+    name: "Max Planck",
+    photo: 3,
+    birth: 0,
+    iq: 0,
+    awards: 0,
+    influence: 0,
+    assets: 0,
+    wiki: 0,
+  },
+  {
+    name: "Erwin Schrödinger",
+    photo: 3,
+    birth: 0,
+    iq: 0,
+    awards: 0,
+    influence: 0,
+    assets: 0,
+    wiki: 0,
+  }
+];
+
+function randomPhysicistDistribution(list, numDivisions) {
+  let dividedLists = [];
+
+  // Randomize order of list
+  let randomizedList = list.sort(() => Math.random() - 0.5);
+
+  // Calculate size of each division
+  let divisionSize = Math.ceil(list.length / numDivisions);
+
+  // Divide the list into the corresponding number of divisions
+  for (let i = 0; i < numDivisions; i++) {
+    dividedLists.push(randomizedList.slice(i * divisionSize, (i + 1) * divisionSize));
+  }
+
+  return dividedLists;
+}
+
 socketIO.on('connection', (socket) => { // Add a listener for the 'connection' event on the socket.io server
-  console.log(`⚡: ${ socket.id } user just connected!`); // Log a message when a new user connects to the server
+  console.log(`⚡: ${socket.id} user just connected!`); // Log a message when a new user connects to the server
   socket.on('message', (data) => { // Add a listener for the 'message' event on the socket
     socketIO.emit('messageResponse', data); // Broadcast the received message to all connected clients
   });
@@ -29,6 +91,11 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
   socket.on('newUser', (data) => { // Add a listener for the 'newUser' event on the socket
     users.push(data); // Add the new user to the array of users
     socketIO.emit('newUserResponse', users); // Broadcast the updated array of users to all connected clients
+
+    if (users.length === 2) {
+      startGame();
+    }
+
   });
 
   socket.on('disconnect', () => { // Add a listener for the 'disconnect' event on the socket
@@ -37,7 +104,7 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
     socketIO.emit('newUserResponse', users); // Broadcast the updated array of users to all connected clients
     socket.disconnect(); // Disconnect the socket
   });
-  
+
 });
 
 // test return for api
@@ -49,5 +116,5 @@ app.get('/api', (req, res) => { // Add a listener for the GET request to the '/a
 
 // set port for server and create server
 http.listen(PORT, () => { // Set the HTTP server to listen on the specified port
-  console.log(`Server listening on ${ PORT }`); // Log a message when the server starts listening
+  console.log(`Server listening on ${PORT}`); // Log a message when the server starts listening
 });
