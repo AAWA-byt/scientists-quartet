@@ -47,21 +47,21 @@ const Cards = ({ socket }) => {
                         <img src={albert_einstein} alt="img" />
                     </div>
                     <div className='stats_container'>
-                        <p><b>Geburtsdatum:</b> xxx</p>
-                        <p><b>IQ:</b> xxx</p>
-                        <p><b>Auszeichnungen:</b> xxx</p>
-                        <p><b>Einfluss:</b> xxx</p>
-                        <p><b>Vermögen:</b> xxx</p>
-                        <p><b>Wikifaktor:</b> xxx</p>
+                        <p id='stats_birth'><b>Geburtsdatum:</b> xxx</p>
+                        <p id='stats_iq'><b>IQ:</b> xxx</p>
+                        <p id='stats_awards'><b>Auszeichnungen:</b> xxx</p>
+                        <p id='stats_influence'><b>Einfluss:</b> xxx</p>
+                        <p id='stats_assets'><b>Vermögen:</b> xxx</p>
+                        <p id='stats_wiki'><b>Wikifaktor:</b> xxx</p>
                     </div>
                 </div>
                 <div className='stats_buttons'>
-                    <button>test</button>
-                    <button>test</button>
-                    <button>test</button>
-                    <button>test</button>
-                    <button>test</button>
-                    <button>test</button>
+                    <button id='btn_birth'>test</button>
+                    <button id='btn_iq'>test</button>
+                    <button id='btn_awards'>test</button>
+                    <button id='btn_influence'>test</button>
+                    <button id='btn_assets'>test</button>
+                    <button id='btn_wiki'>test</button>
                 </div>
             </div>
 
