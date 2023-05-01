@@ -239,6 +239,7 @@ body {
   height: 50vh;
   margin-bottom: 10px;
   overflow-y: scroll;
+  overflow-x: hidden;
   width: 43.9vh;
 
 }
@@ -273,14 +274,31 @@ body {
 }
 
 .stats_buttons {
+  margin-left: 30px;
   margin-top: 20px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: left;
 }
 
 .stats_buttons button {
-  margin-left: 10px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-size: larger;
+  flex-basis: 25%;
+  box-sizing: border-box;
+  background: #4b4e5398;
+  border: 2.9px solid #2c2d2e;
+  border-radius:2px;
+  cursor:pointer;
+  transition: all 0.3s;
+}
+
+.stats_buttons button:hover {
+  background: #676c7298;
+  border: 2.9px solid #2c2d2e;
+  border-radius: 10px;
 }
 
