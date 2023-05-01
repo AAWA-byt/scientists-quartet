@@ -10,12 +10,12 @@ const Cards = ({ socket }) => {
     const [myCards, setMyCards] = useState([]);
     const [cards1, setCards1] = useState([]);
     const [cards2, setCards2] = useState([]);
-    const [player_active, setPlayerActive] = useState([]);
-    const [player_waiting, setPlayerWaiting] = useState([]);
+    // const [player_active, setPlayerActive] = useState([]);
+    // const [player_waiting, setPlayerWaiting] = useState([]);
     const navigate = useNavigate();
 
-    // Handle leaving the chat room
-    const handleLeaveChat = () => {
+    // Handle leaving the game room
+    const handleLeaveGame = () => {
         localStorage.removeItem('userName');
         localStorage.removeItem('userID');
         navigate('/');
@@ -27,13 +27,13 @@ const Cards = ({ socket }) => {
         socket.emit('first-user');
     })
 
-    useEffect(() => {
-        socket.on('player-active', (data) => setPlayerActive(data));
-    }, [socket]);
+    // useEffect(() => {
+    //     socket.on('player-active', (data) => setPlayerActive(data));
+    // }, [socket]);
 
-    useEffect(() => {
-        socket.on('player-waiting', (data) => setPlayerWaiting(data));
-    }, [socket]);
+    // useEffect(() => {
+    //     socket.on('player-waiting', (data) => setPlayerWaiting(data));
+    // }, [socket]);
 
     // Update the list of connected users when a new user joins or leaves the chat room
     useEffect(() => {
@@ -87,7 +87,7 @@ const Cards = ({ socket }) => {
             {/* Header containing game title, made with statement and leave game button */}
             <header className='cards__mainHeader'>
                 <p>Made with socket.io</p>
-                <button className='leaveChat__btn' onClick={handleLeaveChat}>LEAVE GAME</button>
+                <button className='leaveChat__btn' onClick={handleLeaveGame}>LEAVE GAME</button>
             </header>
 
             {/* Container for the current card */}

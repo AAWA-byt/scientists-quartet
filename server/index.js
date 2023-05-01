@@ -19,8 +19,8 @@ const socketIO = require('socket.io')(http, {
 let users = []; // Create an empty array to store the users
 let cards_user_1 = []; // Create an empty array to store user 1 cards
 let cards_user_2 = []; // Create an empty array to store user 2 cards
-let player_active = [];
-let player_waiting = [];
+// let player_active = [];
+// let player_waiting = [];
 
 // Physicist list
 let Physicist = [
@@ -104,13 +104,13 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
     // If there is only one user, split the Physicist array randomly
     if (users.length === 1) {
       console.log('⬆️: Players; 0 -> 1');
-      users[0] = player_active;
+      // users[0] = player_active;
       randomPhysicistsSplit(Physicist);
 
       // If there are two users, start the game
     } else if (users.length === 2) {
       console.log('⬆️: Players: 1 -> 2');
-      users[1] = player_waiting;
+      // users[1] = player_waiting;
       startGame();
     }
 
@@ -146,8 +146,8 @@ app.get('/api', (req, res) => {
 // Function to start the game
 function startGame() {
   console.log('🚀 Game started');
-  socketIO.emit('player-active', player_active);
-  socketIO.emit('player-waiting', player_waiting);
+  // socketIO.emit('player-active', player_active);
+  // socketIO.emit('player-waiting', player_waiting);
 }
 
 // Set the HTTP server to listen on the specified port and log a message when the server starts listening
