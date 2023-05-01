@@ -68,6 +68,8 @@ git clone https://github.com/AAWA-byt/physiker-quartet.git
 cd ./server
 docker-compose up -d 
 ```
+Proceed as described above with the files for the web server and the config files.
+
 
 # :construction: Contribute
 ### Pull Request
