@@ -9,7 +9,7 @@ const cors = require('cors'); // Import the cors middleware
 
 app.use(cors()); // Use the cors middleware to enable Cross-Origin Resource Sharing (CORS)
 
-const socketIO = require('socket.io')(http, { // Create a new socket.io instance using the HTTP server
+const socketIO = require('socket.io')(http, {
   cors: {
     origin: "http://localhost:3000" // Configure the origin of the requests that will be allowed to connect to the socket.io server
   }
@@ -19,8 +19,6 @@ const socketIO = require('socket.io')(http, { // Create a new socket.io instance
 let users = []; // Create an empty array to store the users
 let cards_user_1 = []; // Create an empty array to store user 1 cards
 let cards_user_2 = []; // Create an empty array to store user 2 cards
-
-
 
 // Physicist list
 let Physicist = [
@@ -66,6 +64,12 @@ let Physicist = [
   }
 ];
 
+/*
+  @description Shuffles and splits the Physicist array into two equally sized halves.
+  @param {Array} list The array to be shuffled and split.
+  @returns {Array} The shuffled and split array.
+*/
+
 function randomPhysicistsSplit(list) {
 
   // Shuffle the list randomly
@@ -81,20 +85,26 @@ function randomPhysicistsSplit(list) {
 
 socketIO.on('connection', (socket) => { // Add a listener for the 'connection' event on the socket.io server
   console.log(`⚡: ${socket.id} user just connected!`); // Log a message when a new user connects to the server
-  socket.on('message', (data) => { // Add a listener for the 'message' event on the socket
-    socketIO.emit('messageResponse', data); // Broadcast the received message to all connected clients
+
+  // Add a listener for the 'message' event on the socket and broadcast the received message to all connected clients
+  socket.on('message', (data) => {
+    socketIO.emit('messageResponse', data);
   });
 
-  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data)); // Add a listener for the 'typing' event on the socket and broadcast it to all connected clients except the sender
+  // Add a listener for the 'typing' event on the socket and broadcast it to all connected clients except the sender
+  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
 
-  socket.on('newUser', (data) => { // Add a listener for the 'newUser' event on the socket
-    users.push(data); // Add the new user to the array of users
-    socketIO.emit('newUserResponse', users); // Broadcast the updated array of users to all connected clients
+  // Add a listener for the 'newUser' event on the socket and update the array of users
+  socket.on('newUser', (data) => {
+    users.push(data);
+    socketIO.emit('newUserResponse', users);
 
+    // If there is only one user, split the Physicist array randomly
     if (users.length === 1) {
       console.log('⬆️: Players; 0 -> 1');
       randomPhysicistsSplit(Physicist);
 
+      // If there are two users, start the game
     } else if (users.length === 2) {
       console.log('⬆️: Players: 1 -> 2');
       startGame();
@@ -102,36 +112,39 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
 
   });
 
+  // Add a listener for the 'first-user' event on the socket and send the first user's cards to them
   socket.on('first-user', () => {
     socket.emit('send_first-user', cards_user_1);
   });
 
+  // Add a listener for the 'second-user' event on the socket and send the second user's cards to them
   socket.on('second-user', () => {
     socket.emit('send_second-user', cards_user_2);
   });
 
-  socket.on('disconnect', () => { // Add a listener for the 'disconnect' event on the socket
-    console.log('🔥: A user disconnected'); // Log a message when a user disconnects from the server
-    users = users.filter((user) => user.socketID !== socket.id); // Remove the disconnected user from the array of users
-    socketIO.emit('newUserResponse', users); // Broadcast the updated array of users to all connected clients
-    socket.disconnect(); // Disconnect the socket
+  // Add a listener for the 'disconnect' event on the socket and remove the disconnected user from the array of users
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
+    users = users.filter((user) => user.socketID !== socket.id);
+    socketIO.emit('newUserResponse', users);
+    socket.disconnect();
   });
 
 });
 
-// test return for api
-app.get('/api', (req, res) => { // Add a listener for the GET request to the '/api' endpoint
-  res.json({ // Return a JSON response
-    message: 'Hello World', // Return a simple message
+// Add a listener for the GET request to the '/api' endpoint and return a simple message
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'Hello World',
   });
 });
 
-
+// Function to start the game
 function startGame() {
   console.log('🚀 Game started');
 }
 
-// set port for server and create server
-http.listen(PORT, () => { // Set the HTTP server to listen on the specified port
-  console.log(`Server listening on ${PORT}`); // Log a message when the server starts listening
+// Set the HTTP server to listen on the specified port and log a message when the server starts listening
+http.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
