@@ -10,6 +10,8 @@ const Cards = ({ socket }) => {
     const [myCards, setMyCards] = useState([]);
     const [cards1, setCards1] = useState([]);
     const [cards2, setCards2] = useState([]);
+    const [player_active, setPlayerActive] = useState([]);
+    const [player_waiting, setPlayerWaiting] = useState([]);
     const navigate = useNavigate();
 
     // Handle leaving the chat room
@@ -24,6 +26,14 @@ const Cards = ({ socket }) => {
     useEffect(() => {
         socket.emit('first-user');
     })
+
+    useEffect(() => {
+        socket.on('player-active', (data) => setPlayerActive(data));
+    }, [socket]);
+
+    useEffect(() => {
+        socket.on('player-waiting', (data) => setPlayerWaiting(data));
+    }, [socket]);
 
     // Update the list of connected users when a new user joins or leaves the chat room
     useEffect(() => {
