@@ -59,7 +59,17 @@ pm2 index.js
 
 ### 🐘 Docker Compose
 
-Coming soon!
+It is also possible to run the backend server in a Docker container. Here you can use the following commands:
+```
+# pull the repo from github
+git clone https://github.com/AAWA-byt/physiker-quartet.git
+
+# start docker
+cd ./server
+docker-compose up -d 
+```
+Proceed as described above with the files for the web server and the config files.
+
 
 # :construction: Contribute
 ### Pull Request
