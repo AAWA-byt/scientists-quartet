@@ -4,11 +4,11 @@ import '../index.css';
 // Footer-Komponente, die die Links zur Impressum, Datenschutz und Source Code Seiten enthält
 const Footer = () => {
     return (
-        <div class="footer-dark">
+        <div className="footer-dark">
             <footer>
                 <center>
-                    <div class="container">
-                        <div class="row">
+                    <div className="container">
+                        <div className="row">
                             <h3>Physiker Quartett</h3>
                             <ul>
                                 <li><a href="https://www.aaronwagner.de/impressum/">Impressum</a></li>
