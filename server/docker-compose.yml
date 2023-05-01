@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  aawa-byt:
+    container_name: physicist-quartet-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    restart: unless-stopped
+    network_mode: bridge
