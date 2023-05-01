@@ -57,6 +57,10 @@ npm start
 pm2 index.js
 ```
 
+### 🐘 Docker Compose
+
+Coming soon!
+
 # :construction: Contribute
 ### Pull Request
 You are always welcome to create a [pull request](https://github.com/AAWA-byt/physiker-quartet/pulls). I will look at it as soon as possible. 
