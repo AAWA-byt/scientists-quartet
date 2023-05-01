@@ -2,7 +2,6 @@
 const express = require('express'); // Import the express framework
 const app = express(); // Create a new instance of the express app
 const PORT = 4000; // Set the port number
-const { startGame } = require("./components/GameFunctions.js")
 
 // setup http server
 const http = require('http').Server(app); // Create a new HTTP server using the express app
@@ -18,66 +17,66 @@ const socketIO = require('socket.io')(http, { // Create a new socket.io instance
 
 // listener for connection to socket server
 let users = []; // Create an empty array to store the users
+let cards_user_1 = []; // Create an empty array to store user 1 cards
+let cards_user_2 = []; // Create an empty array to store user 2 cards
+
+
 
 // Physicist list
 let Physicist = [
   {
     name: "Albert Einstein",
     photo: `https://cms-api.galileo.tv/app/uploads/2019/11/91370791.jpg`,
-    birth: 0,
-    iq: 0,
-    awards: 0,
-    influence: 0,
-    assets: 0,
-    wiki: 0,
+    birth: 1,
+    iq: 1,
+    awards: 1,
+    influence: 1,
+    assets: 1,
+    wiki: 1,
   },
   {
     name: "Isaac Newton",
-    photo: 3,
-    birth: 0,
-    iq: 0,
-    awards: 0,
-    influence: 0,
-    assets: 0,
-    wiki: 0,
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg/250px-Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg`,
+    birth: 2,
+    iq: 2,
+    awards: 2,
+    influence: 2,
+    assets: 2,
+    wiki: 2,
   },
   {
     name: "Max Planck",
-    photo: 3,
-    birth: 0,
-    iq: 0,
-    awards: 0,
-    influence: 0,
-    assets: 0,
-    wiki: 0,
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Max_Planck_%281858-1947%29.jpg/220px-Max_Planck_%281858-1947%29.jpg`,
+    birth: 3,
+    iq: 3,
+    awards: 3,
+    influence: 3,
+    assets: 3,
+    wiki: 3,
   },
   {
     name: "Erwin Schrödinger",
-    photo: 3,
-    birth: 0,
-    iq: 0,
-    awards: 0,
-    influence: 0,
-    assets: 0,
-    wiki: 0,
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Max_Planck_%281858-1947%29.jpg/220px-Max_Planck_%281858-1947%29.jpg`,
+    birth: 4,
+    iq: 4,
+    awards: 4,
+    influence: 4,
+    assets: 4,
+    wiki: 4,
   }
 ];
 
-function randomPhysicistDistribution(list, numDivisions) {
-  let dividedLists = [];
+function randomPhysicistsSplit(list) {
 
-  // Randomize order of list
-  let randomizedList = list.sort(() => Math.random() - 0.5);
+  // Shuffle the list randomly
+  let shuffledList = list.sort(() => Math.random() - 0.5);
 
-  // Calculate size of each division
-  let divisionSize = Math.ceil(list.length / numDivisions);
+  // Split the list into two equally sized halves
+  let halfSize = Math.floor(list.length / 2);
+  cards_user_1 = shuffledList.slice(0, halfSize);
+  cards_user_2 = shuffledList.slice(halfSize);
 
-  // Divide the list into the corresponding number of divisions
-  for (let i = 0; i < numDivisions; i++) {
-    dividedLists.push(randomizedList.slice(i * divisionSize, (i + 1) * divisionSize));
-  }
-
-  return dividedLists;
+  return [cards_user_1, cards_user_2];
 }
 
 socketIO.on('connection', (socket) => { // Add a listener for the 'connection' event on the socket.io server
@@ -92,10 +91,23 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
     users.push(data); // Add the new user to the array of users
     socketIO.emit('newUserResponse', users); // Broadcast the updated array of users to all connected clients
 
-    if (users.length === 2) {
+    if (users.length === 1) {
+      console.log('⬆️: Players; 0 -> 1');
+      randomPhysicistsSplit(Physicist);
+
+    } else if (users.length === 2) {
+      console.log('⬆️: Players: 1 -> 2');
       startGame();
     }
 
+  });
+
+  socket.on('first-user', () => {
+    socket.emit('send_first-user', cards_user_1);
+  });
+
+  socket.on('second-user', () => {
+    socket.emit('send_second-user', cards_user_2);
   });
 
   socket.on('disconnect', () => { // Add a listener for the 'disconnect' event on the socket
@@ -113,6 +125,11 @@ app.get('/api', (req, res) => { // Add a listener for the GET request to the '/a
     message: 'Hello World', // Return a simple message
   });
 });
+
+
+function startGame() {
+  console.log('🚀 Game started');
+}
 
 // set port for server and create server
 http.listen(PORT, () => { // Set the HTTP server to listen on the specified port
