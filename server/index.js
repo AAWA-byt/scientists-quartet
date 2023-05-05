@@ -19,8 +19,7 @@ const socketIO = require('socket.io')(http, {
 let users = []; // Create an empty array to store the users
 let cards_user_1 = []; // Create an empty array to store user 1 cards
 let cards_user_2 = []; // Create an empty array to store user 2 cards
-// let player_active = [];
-// let player_waiting = [];
+let player_active = [];
 
 // Physicist list
 let Physicist = [
@@ -30,8 +29,8 @@ let Physicist = [
     birth: 1879,
     iq: 160,
     awards: 42,
-    influence: 0,
-    assets: 580000,
+    influence: 10,
+    assets: 31000000,
     wiki:  159389,
   },
   {
@@ -40,8 +39,8 @@ let Physicist = [
     birth: 1642,
     iq: 190,
     awards: 19,
-    influence: 0,
-    assets: 0,
+    influence: 9,
+    assets: 5000000,
     wiki: 61533,
   },
   {
@@ -50,8 +49,8 @@ let Physicist = [
     birth: 1858,
     iq: 185,
     awards: 29,
-    influence: 0,
-    assets: 0,
+    influence: 9,
+    assets: 800000,
     wiki: 879777,
   },
   {
@@ -60,8 +59,8 @@ let Physicist = [
     birth: 1887,
     iq: 190,
     awards: 16,
-    influence: 0,
-    assets: 0,
+    influence: 8,
+    assets: 215000,
     wiki: 30266,
   }
 ];
@@ -146,8 +145,13 @@ app.get('/api', (req, res) => {
 // Function to start the game
 function startGame() {
   console.log('🚀 Game started');
-  // socketIO.emit('player-active', player_active);
-  // socketIO.emit('player-waiting', player_waiting);
+  console.log("Players list:");
+  console.log(users);
+  player_active = users[0];
+  socketIO.emit('player-active', player_active);
+  console.log("Active player:");
+  console.log(player_active);
+
 }
 
 // Set the HTTP server to listen on the specified port and log a message when the server starts listening
