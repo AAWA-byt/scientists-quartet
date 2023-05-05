@@ -6,10 +6,10 @@ const Cards = ({ socket }) => {
 
     // Define state variables for users, received cards, current user's cards, and cards for each player, and import useNavigate from react-router-dom.
     const [users, setUsers] = useState([]);
-    const [gotCards, setGotCards] = useState([]);
     const [myCards, setMyCards] = useState([]);
     const [cards1, setCards1] = useState([]);
     const [cards2, setCards2] = useState([]);
+    const [player_active, setPlayerActive] = useState([]);
     // const [player_active, setPlayerActive] = useState([]);
     // const [player_waiting, setPlayerWaiting] = useState([]);
     const navigate = useNavigate();
@@ -27,13 +27,9 @@ const Cards = ({ socket }) => {
         socket.emit('first-user');
     })
 
-    // useEffect(() => {
-    //     socket.on('player-active', (data) => setPlayerActive(data));
-    // }, [socket]);
-
-    // useEffect(() => {
-    //     socket.on('player-waiting', (data) => setPlayerWaiting(data));
-    // }, [socket]);
+     useEffect(() => {
+         socket.on('player-active', (data) => setPlayerActive(data));
+     }, [socket]);
 
     // Update the list of connected users when a new user joins or leaves the chat room
     useEffect(() => {
@@ -105,7 +101,7 @@ const Cards = ({ socket }) => {
                         <p id='stats_iq'><b>🧠 IQ:</b> {myCards.length > 0 && myCards[0].iq}</p>
                         <p id='stats_awards'><b>🏆 Auszeichnungen:</b> {myCards.length > 0 && myCards[0].awards}</p>
                         <p id='stats_influence'><b>👑 Einfluss:</b> {myCards.length > 0 && myCards[0].influence}</p>
-                        <p id='stats_assets'><b>💵 Vermögen:</b> {myCards.length > 0 && myCards[0].assets}</p>
+                        <p id='stats_assets'><b>💵 Vermögen:</b> {myCards.length > 0 && myCards[0].assets}$</p>
                         <p id='stats_wiki'><b>📚 Wikifaktor:</b> {myCards.length > 0 && myCards[0].wiki}</p>
                     </div>
                 </div>
@@ -122,7 +118,7 @@ const Cards = ({ socket }) => {
 
             {/* Footer containing player's card count and turn */}
             <div className="cards__footer">
-                <p><b>Your Cards:</b> {myCards.length}, <b>Turn:</b> xxxxx</p>
+                <p><b>Your Cards:</b> {myCards.length}, <b>Turn:</b> {player_active.userName}</p>
             </div>
         </>
     );
