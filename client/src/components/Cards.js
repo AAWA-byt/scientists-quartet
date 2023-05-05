@@ -85,7 +85,7 @@ const Cards = ({ socket }) => {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
             // proceed if it is the users turn
-            // ...
+            socket.emit('NewMove_iq');
 
         } else {
             alert('It is not your turn! Please wait.')
