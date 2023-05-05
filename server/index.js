@@ -15,28 +15,28 @@ const socketIO = require('socket.io')(http, {
   }
 });
 
-// listener for connection to socket server
 let users = []; // Create an empty array to store the users
 let cards_user_1 = []; // Create an empty array to store user 1 cards
 let cards_user_2 = []; // Create an empty array to store user 2 cards
-let player_active = [];
+let player_active = []; // Create an empty array to store active user
+let cards_draw = []; // Create an empty array to store draw cards
 
 // Physicist list
 let Physicist = [
   {
     name: "Albert Einstein",
     photo: `https://cms-api.galileo.tv/app/uploads/2019/11/91370791.jpg`,
-    birth: 1879,
+    birth: 5000,
     iq: 160,
     awards: 42,
     influence: 10,
     assets: 31000000,
-    wiki:  159389,
+    wiki: 159389,
   },
   {
     name: "Sir Isaac Newton",
     photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg/250px-Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg`,
-    birth: 1642,
+    birth: 5000,
     iq: 190,
     awards: 19,
     influence: 9,
@@ -46,7 +46,7 @@ let Physicist = [
   {
     name: "Max Planck",
     photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Max_Planck_%281858-1947%29.jpg/220px-Max_Planck_%281858-1947%29.jpg`,
-    birth: 1858,
+    birth: 5000,
     iq: 185,
     awards: 29,
     influence: 9,
@@ -56,7 +56,7 @@ let Physicist = [
   {
     name: "Erwin Schrödinger",
     photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Erwin_Schr%C3%B6dinger_%281933%29.jpg/220px-Erwin_Schr%C3%B6dinger_%281933%29.jpg`,
-    birth: 1887,
+    birth: 1,
     iq: 190,
     awards: 16,
     influence: 8,
@@ -133,6 +133,123 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
     socket.disconnect();
   });
 
+
+  // GAME STATES FUNCTIONS
+  // NEW MOVE: Birth 
+  socket.on('NewMove_birth', () => {
+    // check if active player is first user in user list
+    if (player_active === users[0]) {
+      // check if choosen value from user 1 card wins over value from user 2 (previous year wins)
+      if (cards_user_1[0].birth < cards_user_2[0].birth) {
+
+        // check is there are draw cards and give them to user 1
+        if (cards_draw != 0) {
+          cards_user_1 = cards_user_1.concat(cards_draw);
+        }
+
+        // Adds the won card to the end of the array
+        cards_user_1.push(cards_user_2[0]);
+
+        // removes the lost card from user 2
+        cards_user_2.shift();
+
+        // Appends the first element of the array back to the end of the array from user 1
+        let used_card = cards_user_1.shift();
+        cards_user_1.push(used_card);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+        // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
+      } else if (cards_user_1[0].birth > cards_user_2[0].birth) {
+
+        // check is there are draw cards and give them to user 2
+        if (cards_draw.length != 0) {
+          cards_user_2 = cards_user_2.concat(cards_draw);
+        }
+
+        // Adds lost card to user 2 array
+        cards_user_2.push(cards_user_1[0]);
+
+        // Removes the lost card from user 1
+        cards_user_1.shift();
+
+        // Appends the first element of the array back to the end of the array from user 2
+        let used_card = cards_user_2.shift();
+        cards_user_2.push(used_card);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+        // Update Active User list
+        player_active = users[1];
+        socketIO.emit('player-active', player_active);
+
+        // check if a draw is made
+      } else if (cards_user_1[0].birth === cards_user_2[0].birth) {
+        // if a draw is made start a tie-break
+
+        // Remove used cards from players
+        //user 1
+        let used_card_user1 = cards_user_1.shift();
+        cards_draw.push(used_card_user1);
+        // user 2 
+        let used_card_user2 = cards_user_2.shift();
+        cards_draw.push(used_card_user2);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+      }
+
+      // check if active player is second user in user list 
+    } else if (player_active === users[1]) {
+      // check if choosen value from user 1 card wins over value from user 2 (previous year wins)
+      if (cards_user_1[0].birth < cards_user_2[0].birth) {
+
+        // Adds the won card to the end of the array
+        cards_user_1.push(cards_user_2[0]);
+
+        // removes the lost card from user 2
+        cards_user_2.shift();
+
+        // Appends the first element of the array back to the end of the array from user 1
+        let used_card = cards_user_1.shift();
+        cards_user_1.push(used_card);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+        // Update Active User list
+        player_active = users[0];
+        socketIO.emit('player-active', player_active);
+
+        // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
+      } else if (cards_user_1[0].birth > cards_user_2[0].birth) {
+        // Adds lost card to user 2 array
+        cards_user_2.push(cards_user_1[0]);
+
+        // Removes the lost card from user 1
+        cards_user_1.shift();
+
+        // Appends the first element of the array back to the end of the array from user 2
+        let used_card = cards_user_2.shift();
+        cards_user_2.push(used_card);
+
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+      }
+    }
+
+  });
+
 });
 
 // Add a listener for the GET request to the '/api' endpoint and return a simple message
@@ -151,7 +268,6 @@ function startGame() {
   socketIO.emit('player-active', player_active);
   console.log("Active player:");
   console.log(player_active);
-
 }
 
 // Set the HTTP server to listen on the specified port and log a message when the server starts listening
