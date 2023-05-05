@@ -98,7 +98,7 @@ const Cards = ({ socket }) => {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
             // proceed if it is the users turn
-            // ...
+            socket.emit('NewMove_awards');
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -111,7 +111,7 @@ const Cards = ({ socket }) => {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
             // proceed if it is the users turn
-            // ...
+            socket.emit('NewMove_influence');
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -124,7 +124,7 @@ const Cards = ({ socket }) => {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
             // proceed if it is the users turn
-            // ...
+            socket.emit('NewMove_assets');
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -137,7 +137,7 @@ const Cards = ({ socket }) => {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
             // proceed if it is the users turn
-            // ...
+            socket.emit('NewMove_wiki');
 
         } else {
             alert('It is not your turn! Please wait.')
