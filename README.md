@@ -1,4 +1,4 @@
-# physiker-quartet
+# scientists-quartet
 
 This project is an online multiplayer quartet game for the browser. 
 It includes a backend server and a front end. 
