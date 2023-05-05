@@ -135,6 +135,7 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
 
 
   // GAME STATES FUNCTIONS
+
   // NEW MOVE: Birth 
   socket.on('NewMove_birth', () => {
     // check if active player is first user in user list
@@ -210,6 +211,11 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
       // check if choosen value from user 1 card wins over value from user 2 (previous year wins)
       if (cards_user_1[0].birth < cards_user_2[0].birth) {
 
+        // check is there are draw cards and give them to user 1
+        if (cards_draw.length != 0) {
+          cards_user_1 = cards_user_1.concat(cards_draw);
+        }
+
         // Adds the won card to the end of the array
         cards_user_1.push(cards_user_2[0]);
 
@@ -230,6 +236,12 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
 
         // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
       } else if (cards_user_1[0].birth > cards_user_2[0].birth) {
+
+        // check is there are draw cards and give them to user 2
+        if (cards_draw.length != 0) {
+          cards_user_2 = cards_user_2.concat(cards_draw);
+        }
+
         // Adds lost card to user 2 array
         cards_user_2.push(cards_user_1[0]);
 
@@ -240,6 +252,169 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         let used_card = cards_user_2.shift();
         cards_user_2.push(used_card);
 
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+        // check if a draw is made
+      } else if (cards_user_1[0].birth === cards_user_2[0].birth) {
+        // if a draw is made start a tie-break
+
+        // Remove used cards from players
+        //user 1
+        let used_card_user1 = cards_user_1.shift();
+        cards_draw.push(used_card_user1);
+        // user 2 
+        let used_card_user2 = cards_user_2.shift();
+        cards_draw.push(used_card_user2);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+      }
+
+    }
+
+  });
+
+  // NEW MOVE: IQ 
+  socket.on('NewMove_iq', () => {
+    // check if active player is first user in user list
+    if (player_active === users[0]) {
+      // check if choosen value from user 1 card wins over value from user 2 (higher value wins)
+      if (cards_user_1[0].iq > cards_user_2[0].iq) {
+
+        // check is there are draw cards and give them to user 1
+        if (cards_draw != 0) {
+          cards_user_1 = cards_user_1.concat(cards_draw);
+          cards_draw.length = 0;
+        }
+
+        // Adds the won card to the end of the array
+        cards_user_1.push(cards_user_2[0]);
+
+        // removes the lost card from user 2
+        cards_user_2.shift();
+
+        // Appends the first element of the array back to the end of the array from user 1
+        let used_card = cards_user_1.shift();
+        cards_user_1.push(used_card);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+        // check if choosen value from user 1 card loses over value from user 2 (higher value wins)  
+      } else if (cards_user_1[0].iq < cards_user_2[0].iq) {
+
+        // check is there are draw cards and give them to user 2
+        if (cards_draw.length != 0) {
+          cards_user_2 = cards_user_2.concat(cards_draw);
+          cards_draw.length = 0;
+        }
+
+        // Adds lost card to user 2 array
+        cards_user_2.push(cards_user_1[0]);
+
+        // Removes the lost card from user 1
+        cards_user_1.shift();
+
+        // Appends the first element of the array back to the end of the array from user 2
+        let used_card = cards_user_2.shift();
+        cards_user_2.push(used_card);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+        // Update Active User list
+        player_active = users[1];
+        socketIO.emit('player-active', player_active);
+
+        // check if a draw is made
+      } else if (cards_user_1[0].iq === cards_user_2[0].iq) {
+        // if a draw is made start a tie-break
+
+        // Remove used cards from players
+        //user 1
+        let used_card_user1 = cards_user_1.shift();
+        cards_draw.push(used_card_user1);
+        // user 2 
+        let used_card_user2 = cards_user_2.shift();
+        cards_draw.push(used_card_user2);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+      }
+
+      // check if active player is second user in user list 
+    } else if (player_active === users[1]) {
+      // check if choosen value from user 1 card wins over value from user 2 (previous year wins)
+      if (cards_user_1[0].iq > cards_user_2[0].iq) {
+
+        // check is there are draw cards and give them to user 1
+        if (cards_draw.length != 0) {
+          cards_user_1 = cards_user_1.concat(cards_draw);
+          cards_draw.length = 0;
+        }
+
+        // Adds the won card to the end of the array
+        cards_user_1.push(cards_user_2[0]);
+
+        // removes the lost card from user 2
+        cards_user_2.shift();
+
+        // Appends the first element of the array back to the end of the array from user 1
+        let used_card = cards_user_1.shift();
+        cards_user_1.push(used_card);
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+        // Update Active User list
+        player_active = users[0];
+        socketIO.emit('player-active', player_active);
+
+        // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
+      } else if (cards_user_1[0].iq < cards_user_2[0].iq) {
+
+        // check is there are draw cards and give them to user 2
+        if (cards_draw.length != 0) {
+          cards_user_2 = cards_user_2.concat(cards_draw);
+          cards_draw.length = 0;
+        }
+
+        // Adds lost card to user 2 array
+        cards_user_2.push(cards_user_1[0]);
+
+        // Removes the lost card from user 1
+        cards_user_1.shift();
+
+        // Appends the first element of the array back to the end of the array from user 2
+        let used_card = cards_user_2.shift();
+        cards_user_2.push(used_card);
+
+
+        // update the new card decks for both users
+        socketIO.emit('send_first-user', cards_user_1);
+        socketIO.emit('send_second-user', cards_user_2);
+
+        // check if a draw is made
+      } else if (cards_user_1[0].iq === cards_user_2[0].iq) {
+        // if a draw is made start a tie-break
+
+        // Remove used cards from players
+        //user 1
+        let used_card_user1 = cards_user_1.shift();
+        cards_draw.push(used_card_user1);
+        // user 2 
+        let used_card_user2 = cards_user_2.shift();
+        cards_draw.push(used_card_user2);
 
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
