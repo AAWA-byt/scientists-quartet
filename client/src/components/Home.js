@@ -33,25 +33,31 @@ const Home = ({ socket }) => {
   // Render a form with a header, a label, an input field for the username, and a button if there are less than two users
   if (users.length < 2) {
     return (
-      <form className="home__container" onSubmit={handleSubmit}>
-        <h2 className="home__header">Choose your username</h2>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          minLength={6}
-          name="username"
-          id="username"
-          className="username__input"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        <button className="home__cta">SIGN IN</button>
-        <p>There is still room for more players.</p>
-      </form>
+      <div className='home'>
+        <form className="home__container" onSubmit={handleSubmit}>
+          <h1>Scientists Quartet</h1>
+          <h3 className="home__header">Choose your username</h3>
+          <input
+            type="text"
+            required
+            minLength={6}
+            name="username"
+            placeholder='Username'
+            id="username"
+            className="username__input"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <button>SIGN IN</button>
+          <p>There is still room for more players.</p>
+        </form>
+      </div>
     );
   } else { // Render a message if there are already two users
     return (
+      <div className='home'>
       <h1>The maximum number of players has been reached</h1>
+      </div>
     );
   }
 };

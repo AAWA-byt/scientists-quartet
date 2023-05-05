@@ -162,7 +162,7 @@ const Cards = ({ socket }) => {
             {/* Header containing game title, made with statement and leave game button */}
             <header className='cards__mainHeader'>
                 <p>Made with socket.io</p>
-                <button className='leaveChat__btn' onClick={handleLeaveGame}>LEAVE GAME</button>
+                <button className='leave__btn' onClick={handleLeaveGame}>Leave Game</button>
             </header>
 
             {/* Container for the current card */}

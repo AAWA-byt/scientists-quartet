@@ -35,6 +35,25 @@ body {
   width: 45vh;
 }
 
+.chat__mainHeader button {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  background: #4b4e5328;
+  border: 2.9px solid #2c2d2e;
+  border-radius:2px;
+  cursor:pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+  padding: 5px 5px 5px 5px
+}
+
+.chat__mainHeader button:hover {
+  background: #676c7298;
+  border: 2.9px solid #2c2d2e;
+  border-radius: 6px;
+}
+
 .message__container {
   background-color: rgb(55, 60, 63);
   padding: 10px 20px 5px 20px;
@@ -233,6 +252,25 @@ body {
   width: 45vh;
 }
 
+.cards__mainHeader button {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  background: #4b4e5328;
+  border: 2.9px solid #2c2d2e;
+  border-radius:2px;
+  cursor:pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+  padding: 5px 5px 5px 5px
+}
+
+.cards__mainHeader button:hover {
+  background: #676c7298;
+  border: 2.9px solid #2c2d2e;
+  border-radius: 6px;
+}
+
 .cards__container {
   background-color: rgb(55, 60, 63);
   padding: 10px 20px 5px 20px;
@@ -302,3 +340,55 @@ body {
   border-radius: 10px;
 }
 
+.home {
+  display: flex;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.home__container button {
+  color:rgb(255, 255, 255);
+  margin-top: 3px;
+  background: #4b4e5365;
+  border: 2.9px solid #2c2d2e;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight:500;
+  font-size: 18px;
+  border-radius: 2px;
+  line-height: 22px;
+  transition: all 0.3s;
+  padding: 13px;
+  margin-bottom: 10px;
+  width:40%;
+  box-sizing: border-box;
+  outline:0;
+}
+
+.home__container button:hover {
+  background: #4b4e5379;
+  border: 2.9px solid #2c2d2e;
+  border-radius: 10px;
+}
+
+.username__input {
+  color:rgb(255, 255, 255);
+  margin-top: 3px;
+  margin-right: 10px;
+  border:2.9px solid #3b3a3a;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight:500;
+  font-size: 18px;
+  border-radius: 2px;
+  line-height: 22px;
+  background-color: transparent;
+  transition: all 0.3s;
+  padding: 13px;
+  margin-bottom: 10px;
+  width:40%;
+  box-sizing: border-box;
+  outline:0;
+}
