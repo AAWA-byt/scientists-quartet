@@ -80,6 +80,19 @@ const Cards = ({ socket }) => {
 
     }
 
+    // function for buttton with id "btn_age"
+    function btn_age() {
+        // check if it is the users turn
+        if (player_active.userName === localStorage.getItem('userName')) {
+            // proceed if it is the users turn
+            socket.emit('NewMove_age');
+
+        } else {
+            alert('It is not your turn! Please wait.')
+        }
+
+    }
+
     // function for buttton with id "btn_iq"
     function btn_iq() {
         // check if it is the users turn
@@ -93,12 +106,12 @@ const Cards = ({ socket }) => {
 
     }
 
-    // function for buttton with id "btn_awards"
-    function btn_awards() {
+    // function for buttton with id "btn_hindex"
+    function btn_hindex() {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
             // proceed if it is the users turn
-            socket.emit('NewMove_awards');
+            socket.emit('NewMove_hindex');
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -112,19 +125,6 @@ const Cards = ({ socket }) => {
         if (player_active.userName === localStorage.getItem('userName')) {
             // proceed if it is the users turn
             socket.emit('NewMove_influence');
-
-        } else {
-            alert('It is not your turn! Please wait.')
-        }
-
-    }
-
-    // function for buttton with id "btn_assets"
-    function btn_assets() {
-        // check if it is the users turn
-        if (player_active.userName === localStorage.getItem('userName')) {
-            // proceed if it is the users turn
-            socket.emit('NewMove_assets');
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -177,20 +177,20 @@ const Cards = ({ socket }) => {
                     <div className='stats_container'>
                         <p id='stats_name'><b>👤 Name:</b> {myCards.length > 0 && myCards[0].name}</p>
                         <p id='stats_birth'><b>👶 Birth:</b> {myCards.length > 0 && myCards[0].birth}</p>
-                        <p id='stats_iq'><b>🧠 IQ:</b> {myCards.length > 0 && myCards[0].iq}</p>
-                        <p id='stats_awards'><b>🏆 Awards:</b> {myCards.length > 0 && myCards[0].awards}</p>
-                        <p id='stats_influence'><b>👑 Influence:</b> {myCards.length > 0 && myCards[0].influence}</p>
-                        <p id='stats_assets'><b>💵 Assets:</b> {myCards.length > 0 && myCards[0].assets}$</p>
+                        <p id='stats_age'><b>🕰️ Age:</b> {myCards.length > 0 && myCards[0].age}</p>
+                        <p id='stats_iq'><b>🧠 IQ:</b> ~ {myCards.length > 0 && myCards[0].iq}</p>
+                        <p id='stats_influence'><b>👑 H-Index:</b> {myCards.length > 0 && myCards[0].h_index}</p>
+                        <p id='stats_assets'><b>🌟 Influence:</b> ~ {myCards.length > 0 && myCards[0].influence}$</p>
                         <p id='stats_wiki'><b>📚 Wikifactor:</b> {myCards.length > 0 && myCards[0].wiki}</p>
                     </div>
                 </div>
                 {/* Container for the card stat buttons */}
                 <div className='stats_buttons'>
                     <button id='btn_birth' onClick={btn_birth}>👶</button>
+                    <button id='btn_age' onClick={btn_age}>🕰️</button>
                     <button id='btn_iq' onClick={btn_iq}>🧠</button>
-                    <button id='btn_awards' onClick={btn_awards}>🏆</button>
-                    <button id='btn_influence' onClick={btn_influence}>👑</button>
-                    <button id='btn_assets' onClick={btn_assets}>💵</button>
+                    <button id='btn_hindex' onClick={btn_hindex}>👑</button>
+                    <button id='btn_influence' onClick={btn_influence}>🌟</button>
                     <button id='btn_wiki' onClick={btn_wiki}>📚</button>
                 </div>
             </div>
