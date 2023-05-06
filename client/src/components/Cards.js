@@ -180,7 +180,7 @@ const Cards = ({ socket }) => {
                         <p id='stats_age'><b>🕰️ Age:</b> {myCards.length > 0 && myCards[0].age}</p>
                         <p id='stats_iq'><b>🧠 IQ:</b> ~ {myCards.length > 0 && myCards[0].iq}</p>
                         <p id='stats_influence'><b>👑 H-Index:</b> {myCards.length > 0 && myCards[0].h_index}</p>
-                        <p id='stats_assets'><b>🌟 Influence:</b> ~ {myCards.length > 0 && myCards[0].influence}$</p>
+                        <p id='stats_assets'><b>🌟 Influence:</b> {myCards.length > 0 && myCards[0].influence}</p>
                         <p id='stats_wiki'><b>📚 Wikifactor:</b> {myCards.length > 0 && myCards[0].wiki}</p>
                     </div>
                 </div>
