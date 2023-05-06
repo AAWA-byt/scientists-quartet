@@ -51,7 +51,7 @@ let Physicist = [
     iq: 160,
     h_index: 127,
     influence: 90,
-    wiki: 879777,
+    wiki: 87996,
   },
   {
     name: "Erwin Schrödinger",
@@ -70,7 +70,7 @@ let Physicist = [
     age: 66,
     iq: 175,
     h_index: 58,
-    influence: 95,
+    influence: 92,
     wiki: 82640,
   },
   {
@@ -87,12 +87,23 @@ let Physicist = [
     name: "Alan Turin",
     photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Alan_Turing_az_1930-as_%C3%A9vekben.jpg/220px-Alan_Turing_az_1930-as_%C3%A9vekben.jpg`,
     birth: 1912,
-    age: 41,
+    age: 37,
     iq: 185,
     h_index: 27,
     influence: 99,
     wiki: 57152,
+  },
+  {
+    name: "Rosalind Franklin",
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Rosalind_Franklin_%28retouched%29.jpg/220px-Rosalind_Franklin_%28retouched%29.jpg`,
+    birth: 1920,
+    age: 41,
+    iq: 175,
+    h_index: 0,
+    influence: 96,
+    wiki: 63395,
   }
+
 ];
 
 /*
