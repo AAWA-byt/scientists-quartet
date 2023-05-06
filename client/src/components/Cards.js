@@ -4,12 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Cards = ({ socket }) => {
 
-    // Define state variables for users, received cards, current user's cards, and cards for each player, and import useNavigate from react-router-dom.
+    // Define state variables for users, received cards, current user's cards, and cards for each player, active player, game status and import useNavigate from react-router-dom.
     const [users, setUsers] = useState([]);
     const [myCards, setMyCards] = useState([]);
     const [cards1, setCards1] = useState([]);
     const [cards2, setCards2] = useState([]);
     const [player_active, setPlayerActive] = useState([]);
+    const [game_status, setGameStatus] = useState([]);
     // const [player_active, setPlayerActive] = useState([]);
     // const [player_waiting, setPlayerWaiting] = useState([]);
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ const Cards = ({ socket }) => {
         socket.emit('first-user');
     })
 
+    // Update the active player array
     useEffect(() => {
         socket.on('player-active', (data) => setPlayerActive(data));
     }, [socket]);
@@ -63,7 +65,14 @@ const Cards = ({ socket }) => {
                 setMyCards(data);
             }
         });
-    }, [socket])
+    }, [socket]);
+
+    // Update the games status array
+    useEffect(() => {
+        socket.on('new_GameStatus', (data) => {
+            setGameStatus(data);
+        });
+    }, [socket]);
 
 
     // Functions for Button Events
@@ -154,7 +163,7 @@ const Cards = ({ socket }) => {
                     <h4 className="cards__header">INFORMATIONS</h4>
                     <div className="cards__users">
                         <p id='playercount'><b>Players:</b> {users.length}/2</p>
-                        <p id='gamestatus'><b>Gamestatus:</b> waiting</p>
+                        <p id='gamestatus'><b>Gamestatus:</b> {game_status}</p>
                     </div>
                 </div>
             </div>
