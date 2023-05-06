@@ -20,6 +20,7 @@ let cards_user_1 = []; // Create an empty array to store user 1 cards
 let cards_user_2 = []; // Create an empty array to store user 2 cards
 let player_active = []; // Create an empty array to store active user
 let cards_draw = []; // Create an empty array to store draw cards
+let game_status = []; // Create an empty array to store game status
 
 // Physicist list
 let Physicist = [
@@ -106,6 +107,45 @@ let Physicist = [
 
 ];
 
+// Array for player that lost
+let game_lost = [
+  {
+    name: "x",
+    photo: `https://sd.keepcalms.com/i-w600/keep-calm-even-though-you-lost-the-game.jpg`,
+    birth: 0,
+    age: 0,
+    iq: 0,
+    h_index: 0,
+    influence: 0,
+    wiki: 0,
+  }];
+
+// Array for player that lost
+let game_won = [
+  {
+    name: "x",
+    photo: `https://sd.keepcalms.com/i/keep-calm-game-over-we-win.png`,
+    birth: 0,
+    age: 0,
+    iq: 0,
+    h_index: 0,
+    influence: 0,
+    wiki: 0,
+  }];
+
+// Array for player that lost
+let game_draw = [
+  {
+    name: "x",
+    photo: `https://sd.keepcalms.com/i-w600/keep-calm-it-s-a-tie-game.jpg`,
+    birth: 0,
+    age: 0,
+    iq: 0,
+    h_index: 0,
+    influence: 0,
+    wiki: 0,
+  }];
+
 /*
   @description Shuffles and splits the Physicist array into two equally sized halves.
   @param {Array} list The array to be shuffled and split.
@@ -144,14 +184,16 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
     // If there is only one user, split the Physicist array randomly
     if (users.length === 1) {
       console.log('⬆️: Players; 0 -> 1');
-      // users[0] = player_active;
       randomPhysicistsSplit(Physicist);
+      game_status = "Waiting..";
+      socketIO.emit('new_GameStatus', game_status);
 
-      // If there are two users, start the game
+      // If there are two users, start the game and update game status
     } else if (users.length === 2) {
       console.log('⬆️: Players: 1 -> 2');
-      // users[1] = player_waiting;
       startGame();
+      game_status = "Active";
+      socketIO.emit('new_GameStatus', game_status);
     }
 
   });
@@ -204,6 +246,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
       } else if (cards_user_1[0].birth > cards_user_2[0].birth) {
 
@@ -231,6 +275,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[1];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].birth === cards_user_2[0].birth) {
         // if a draw is made start a tie-break
@@ -246,6 +292,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
 
@@ -278,6 +326,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[0];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
       } else if (cards_user_1[0].birth > cards_user_2[0].birth) {
 
@@ -302,6 +352,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].birth === cards_user_2[0].birth) {
         // if a draw is made start a tie-break
@@ -317,6 +369,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
 
@@ -351,6 +405,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (higher value wins)  
       } else if (cards_user_1[0].age < cards_user_2[0].age) {
 
@@ -378,6 +434,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[1];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].age === cards_user_2[0].age) {
         // if a draw is made start a tie-break
@@ -393,6 +451,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
 
@@ -425,6 +485,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[0];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
       } else if (cards_user_1[0].age < cards_user_2[0].age) {
 
@@ -449,6 +511,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].age === cards_user_2[0].age) {
         // if a draw is made start a tie-break
@@ -464,6 +528,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
     }
@@ -497,6 +563,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (higher value wins)  
       } else if (cards_user_1[0].iq < cards_user_2[0].iq) {
 
@@ -524,6 +592,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[1];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].iq === cards_user_2[0].iq) {
         // if a draw is made start a tie-break
@@ -539,6 +609,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
 
@@ -571,6 +643,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[0];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
       } else if (cards_user_1[0].iq < cards_user_2[0].iq) {
 
@@ -595,6 +669,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].iq === cards_user_2[0].iq) {
         // if a draw is made start a tie-break
@@ -610,6 +686,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
     }
@@ -643,6 +721,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (higher value wins)  
       } else if (cards_user_1[0].h_index < cards_user_2[0].h_index) {
 
@@ -670,6 +750,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[1];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].h_index === cards_user_2[0].h_index) {
         // if a draw is made start a tie-break
@@ -685,6 +767,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
 
@@ -717,6 +801,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[0];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
       } else if (cards_user_1[0].h_index < cards_user_2[0].h_index) {
 
@@ -741,6 +827,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].h_index === cards_user_2[0].h_index) {
         // if a draw is made start a tie-break
@@ -756,6 +844,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
     }
@@ -789,6 +879,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (higher value wins)  
       } else if (cards_user_1[0].influence < cards_user_2[0].influence) {
 
@@ -816,6 +908,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[1];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].influence === cards_user_2[0].influence) {
         // if a draw is made start a tie-break
@@ -831,6 +925,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
 
@@ -863,6 +959,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[0];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
       } else if (cards_user_1[0].influence < cards_user_2[0].influence) {
 
@@ -887,6 +985,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].influence === cards_user_2[0].influence) {
         // if a draw is made start a tie-break
@@ -902,6 +1002,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
     }
@@ -935,6 +1037,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (higher value wins)  
       } else if (cards_user_1[0].wiki < cards_user_2[0].wiki) {
 
@@ -962,6 +1066,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[1];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].wiki === cards_user_2[0].wiki) {
         // if a draw is made start a tie-break
@@ -977,6 +1083,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // update the new card decks for both users
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
+
+        checkWin();
 
       }
 
@@ -1009,6 +1117,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         player_active = users[0];
         socketIO.emit('player-active', player_active);
 
+        checkWin();
+
         // check if choosen value from user 1 card loses over value from user 2 (previous year wins)  
       } else if (cards_user_1[0].wiki < cards_user_2[0].wiki) {
 
@@ -1033,6 +1143,8 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
         // check if a draw is made
       } else if (cards_user_1[0].wiki === cards_user_2[0].wiki) {
         // if a draw is made start a tie-break
@@ -1049,12 +1161,12 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         socketIO.emit('send_first-user', cards_user_1);
         socketIO.emit('send_second-user', cards_user_2);
 
+        checkWin();
+
       }
     }
 
   });
-
-
 
 });
 
@@ -1074,6 +1186,55 @@ function startGame() {
   socketIO.emit('player-active', player_active);
   console.log("Active player:");
   console.log(player_active);
+}
+
+// Function to check if a player has won
+function checkWin() {
+  // check if user 1 wins
+  if (cards_user_1.length > 0 && cards_user_2.length < 1) {
+    // Set Photos for winner and loser
+    cards_user_2 = game_lost;
+    cards_user_1 = game_won;
+    // Update Game status
+    game_status = "Game Over!";
+
+    // Send everything to the clients
+    socketIO.emit('send_first-user', cards_user_1);
+    socketIO.emit('send_second-user', cards_user_2);
+    socketIO.emit('new_GameStatus', game_status);
+
+    console.log("Game Over!");
+
+    // check if user 2 wins
+  } else if (cards_user_2.length > 0 && cards_user_1.length < 1) {
+    // Set Photos for winner and loser
+    cards_user_1 = game_lost;
+    cards_user_2 = game_won;
+    // Update Game status
+    game_status = "Game Over!";
+
+    socketIO.emit('send_first-user', cards_user_1);
+    socketIO.emit('send_second-user', cards_user_2);
+    socketIO.emit('new_GameStatus', game_status);
+
+    console.log("Game Over!");
+
+    // check if it is a draw
+  } else if (cards_user_1.length < 1 && cards_user_2.length < 1) {
+    // Set Photos for winner and loser
+    cards_user_1 = game_draw;
+    cards_user_2 = game_draw;
+    // Update Game status
+    game_status = "Game Over!";
+
+
+    socketIO.emit('send_first-user', cards_user_1);
+    socketIO.emit('send_second-user', cards_user_2);
+    socketIO.emit('new_GameStatus', game_status);
+
+    console.log("Game Over!");
+
+  }
 }
 
 // Set the HTTP server to listen on the specified port and log a message when the server starts listening
