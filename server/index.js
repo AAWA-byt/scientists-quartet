@@ -176,6 +176,7 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // check is there are draw cards and give them to user 1
         if (cards_draw != 0) {
           cards_user_1 = cards_user_1.concat(cards_draw);
+          cards_draw.length = 0;
         }
 
         // Adds the won card to the end of the array
@@ -198,6 +199,7 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // check is there are draw cards and give them to user 2
         if (cards_draw.length != 0) {
           cards_user_2 = cards_user_2.concat(cards_draw);
+          cards_draw.length = 0;
         }
 
         // Adds lost card to user 2 array
@@ -244,6 +246,7 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // check is there are draw cards and give them to user 1
         if (cards_draw.length != 0) {
           cards_user_1 = cards_user_1.concat(cards_draw);
+          cards_draw.length = 0;
         }
 
         // Adds the won card to the end of the array
@@ -270,6 +273,7 @@ socketIO.on('connection', (socket) => { // Add a listener for the 'connection' e
         // check is there are draw cards and give them to user 2
         if (cards_draw.length != 0) {
           cards_user_2 = cards_user_2.concat(cards_draw);
+          cards_draw.length = 0;
         }
 
         // Adds lost card to user 2 array
