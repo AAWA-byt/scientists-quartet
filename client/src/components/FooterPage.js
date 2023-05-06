@@ -9,10 +9,10 @@ const Footer = () => {
                 <center>
                     <div className="container">
                         <div className="row">
-                            <h3>Physiker Quartett</h3>
+                            <h3>Scientists Quartet</h3>
                             <ul>
                                 <li><a href="https://www.aaronwagner.de/impressum/">Impressum</a></li>
-                                <li><a href="https://github.com/AAWA-byt/physiker-quartet">Source Code</a></li>
+                                <li><a href="https://github.com/AAWA-byt/scientists-quartet">Source Code</a></li>
                             </ul>
                         </div>
                         <p class="copyright"><a href='https://www.github.com/AAWA-byt'>Developed by Aaron Wagner</a></p>
