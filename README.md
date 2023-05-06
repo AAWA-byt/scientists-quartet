@@ -34,7 +34,7 @@ If two cards have the same value, a draw is made. In this case, both cards are p
 ```
 git clone https://github.com/AAWA-byt/physiker-quartet.git
 ```
-- Edit the config file ```./server/config.json``` as you need it 
+- Edit the config file ```./server/config.json``` as you need it (here you define the address with which the backend server is allowed to communicate)
 - In the ```./client``` folder you run the following commands:
 ```
 # Install all required packages
@@ -44,7 +44,7 @@ npm i
 npm run build
 ```
 - Now deploy the files from the ```build``` folder to a static server
-- After deploying the files, you go back to the ```./config``` folder and the following commands:
+- After deploying the files, you go back to the ```./server``` folder and run the following commands:
 ```
 # Install all required packages
 npm i
