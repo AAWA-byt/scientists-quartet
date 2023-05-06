@@ -12,7 +12,7 @@ If two cards have the same value, a draw is made. In this case, both cards are p
 
 ## :sparkles: Features
 
-- ☑️ Quartet game
+- ✅ Quartet game
 - ☑️ Log Games (MySQL)
 - ✅ Live Chat 
 - ✅ User list & user count
