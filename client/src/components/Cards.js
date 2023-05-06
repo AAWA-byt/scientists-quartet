@@ -80,8 +80,13 @@ const Cards = ({ socket }) => {
     function btn_birth() {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
-            // proceed if it is the users turn
-            socket.emit('NewMove_birth');
+            // check if game is not over
+            if (game_status != "Game Over!") {
+                // proceed if it is the users turn
+                socket.emit('NewMove_birth');
+            } else {
+                alert('The game is over.')
+            }
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -93,8 +98,13 @@ const Cards = ({ socket }) => {
     function btn_age() {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
-            // proceed if it is the users turn
-            socket.emit('NewMove_age');
+            // check if game is not over
+            if (game_status != "Game Over!") {
+                // proceed if it is the users turn
+                socket.emit('NewMove_age');
+            } else {
+                alert('The game is over.')
+            }
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -106,8 +116,13 @@ const Cards = ({ socket }) => {
     function btn_iq() {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
-            // proceed if it is the users turn
-            socket.emit('NewMove_iq');
+            // check if game is not over
+            if (game_status != "Game Over!") {
+                // proceed if it is the users turn
+                socket.emit('NewMove_iq');
+            } else {
+                alert('The game is over.')
+            }
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -119,8 +134,13 @@ const Cards = ({ socket }) => {
     function btn_hindex() {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
-            // proceed if it is the users turn
-            socket.emit('NewMove_hindex');
+            // check if game is not over
+            if (game_status != "Game Over!") {
+                // proceed if it is the users turn
+                socket.emit('NewMove_hindex');
+            } else {
+                alert('The game is over.')
+            }
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -132,8 +152,13 @@ const Cards = ({ socket }) => {
     function btn_influence() {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
-            // proceed if it is the users turn
-            socket.emit('NewMove_influence');
+            // check if game is not over
+            if (game_status != "Game Over!") {
+                // proceed if it is the users turn
+                socket.emit('NewMove_influence');
+            } else {
+                alert('The game is over.')
+            }
 
         } else {
             alert('It is not your turn! Please wait.')
@@ -145,8 +170,13 @@ const Cards = ({ socket }) => {
     function btn_wiki() {
         // check if it is the users turn
         if (player_active.userName === localStorage.getItem('userName')) {
-            // proceed if it is the users turn
-            socket.emit('NewMove_wiki');
+            // check if game is not over
+            if (game_status != "Game Over!") {
+                // proceed if it is the users turn
+                socket.emit('NewMove_wiki');
+            } else {
+                alert('The game is over.')
+            }
 
         } else {
             alert('It is not your turn! Please wait.')
