@@ -85,7 +85,7 @@ let Physicist = [
     wiki: 36018,
   },
   {
-    name: "Alan Turin",
+    name: "Alan Turing",
     photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Alan_Turing_az_1930-as_%C3%A9vekben.jpg/220px-Alan_Turing_az_1930-as_%C3%A9vekben.jpg`,
     birth: 1912,
     age: 37,
