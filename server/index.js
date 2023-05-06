@@ -2,6 +2,8 @@
 const express = require('express'); // Import the express framework
 const app = express(); // Create a new instance of the express app
 const PORT = 4000; // Set the port number
+const fs = require('fs'); // Import fs package
+const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8')); // import origin data from config.json
 
 // setup http server
 const http = require('http').Server(app); // Create a new HTTP server using the express app
@@ -11,7 +13,7 @@ app.use(cors()); // Use the cors middleware to enable Cross-Origin Resource Shar
 
 const socketIO = require('socket.io')(http, {
   cors: {
-    origin: "http://localhost:3000" // Configure the origin of the requests that will be allowed to connect to the socket.io server
+    origin: config.origin // Configure the origin of the requests that will be allowed to connect to the socket.io server
   }
 });
 
