@@ -1278,6 +1278,13 @@ app.get('/api', (req, res) => {
   });
 });
 
+// Add a listener for the GET request to the '/api/cards' endpoint and return "Physicist"
+app.get('/api/cards', (req, res) => {
+  res.json({
+    Physicist
+  })
+});
+
 // Function to start the game
 function startGame() {
   console.log('🚀 Game started');
