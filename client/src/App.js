@@ -1,8 +1,9 @@
 // Import the required modules from the react-router-dom library
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// Import the "Home" and "ChatPage" components from their respective files
+// Import the "Home", "ChatPage", "CardsOverview" components from their respective files
 import Home from './components/Home';
 import ChatPage from './components/ChatPage';
+import CardsOverview from './components/CardsOverview';
 // Import the "socket.io-client" module to establish a connection to the server
 import socketIO from 'socket.io-client';
 
@@ -20,6 +21,8 @@ function App() {
           <Route path="/" element={<Home socket={socket} />}></Route>
           {/* Render the ChatPage component when the path is "/chat" and pass the socket object as a prop */}
           <Route path="/game" element={<ChatPage socket={socket} />}></Route>
+          {/* Render the CardsOverviewPage when the path is "cards" and pass the socket object as a prop */}
+          <Route path="cards" element={<CardsOverview socket={socket} />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
