@@ -186,6 +186,26 @@ let Physicist = [
     influence: 87,
     wiki: 8386,
   },
+  {
+    name: "Stephen Hawking",
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Stephen_Hawking.StarChild.jpg/220px-Stephen_Hawking.StarChild.jpg`,
+    birth: 1942,
+    age: 76,
+    iq: 160,
+    h_index: 99,
+    influence: 90,
+    wiki: 53424,
+  },
+  {
+    name: "Lise Meitner",
+    photo: `https://www.wienerzeitung.at/_em_daten/_cache/image/1x2km9EiulDsQyHYtu9W1ttDgtCBCzqlFQXc8eueXaC_POE80nanucry90-2RVM7QrFwaw0PhY-1J_VSyaRlXPFli3Imi-xTtAEPg8BV67lgQNswAgmp_igQ/181018-1714-948-0900-167609-191029meitner.jpg`,
+    birth: 1878,
+    age: 89,
+    iq: 160,
+    h_index: 0,
+    influence: 99,
+    wiki: 58005,
+  },
 ];
 
 // Array for player that lost
@@ -1261,7 +1281,6 @@ app.get('/api', (req, res) => {
 // Function to start the game
 function startGame() {
   console.log('🚀 Game started');
-  console.log(`Cards in total: ${Physicist.length}`);
   console.log("Players list:");
   console.log(users);
   player_active = users[0];
@@ -1322,4 +1341,5 @@ function checkWin() {
 // Set the HTTP server to listen on the specified port and log a message when the server starts listening
 http.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
+  console.log(`Cards in total: ${Physicist.length}`);
 });
