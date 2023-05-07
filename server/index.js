@@ -105,8 +105,87 @@ let Physicist = [
     h_index: 0,
     influence: 96,
     wiki: 63395,
-  }
-
+  },
+  {
+    name: "Charles Darwin",
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Charles_Darwin_portrain_by_John_Collier%2C_1883_copy.jpg/220px-Charles_Darwin_portrain_by_John_Collier%2C_1883_copy.jpg`,
+    birth: 1809,
+    age: 73,
+    iq: 135,
+    h_index: 0,
+    influence: 95,
+    wiki: 83407,
+  },
+  {
+    name: "Jane Goodall",
+    photo: `https://www.upo.es/diario/wp-content/uploads/2019/02/149_2073741.jpg`,
+    birth: 1934,
+    age: 89,
+    iq: 120,
+    h_index: 75,
+    influence: 90,
+    wiki: 24740,
+  },
+  {
+    name: "Hypatia von Alexandria",
+    photo: `https://wir-staerken-maedchen.de/wp-content/uploads/2020/11/Hypatia-1.jpg`,
+    birth: 355,
+    age: 60,
+    iq: 120,
+    h_index: 0,
+    influence: 50,
+    wiki: 53814,
+  },
+  {
+    name: "Sheldon Cooper",
+    photo: `https://www.grazia.fr/wp-content/uploads/grazia/2017/03/The-Big-Bang-Theory-bientot-une-serie-sur-la-jeunesse-de-Sheldon-Cooper.jpeg`,
+    birth: 1980,
+    age: 43,
+    iq: 187,
+    h_index: 83,
+    influence: 100,
+    wiki: 77589,
+  },
+  {
+    name: "Nikola Tesla",
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Tesla3.jpg/220px-Tesla3.jpg`,
+    birth: 1856,
+    age: 86,
+    iq: 160,
+    h_index: 0,
+    influence: 80,
+    wiki: 69933,
+  },
+  {
+    name: "Leonardo da Vinci",
+    photo: `https://image.geo.de/30045040/t/FX/v4/w1440/r0/-/38-01-gross-jpg--18921-.jpg`,
+    birth: 1452,
+    age: 67,
+    iq: 160,
+    h_index: 0,
+    influence: 93,
+    wiki: 119805,
+  },
+  {
+    name: "Johannes Kepler",
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/JKepler.jpg/220px-JKepler.jpg`,
+    birth: 1571,
+    age: 58,
+    iq: 150,
+    h_index: 0,
+    influence: 91,
+    wiki: 107896,
+  },
+  {
+    name: "Chien-Shiung Wu",
+    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Chien-shiung_Wu_%281912-1997%29_C.jpg/220px-Chien-shiung_Wu_%281912-1997%29_C.jpg`,
+    birth: 1912,
+    age: 84,
+    iq: 160,
+    h_index: 47,
+    influence: 87,
+    wiki: 8386,
+  },
 ];
 
 // Array for player that lost
@@ -1242,4 +1321,5 @@ function checkWin() {
 // Set the HTTP server to listen on the specified port and log a message when the server starts listening
 http.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
+  console.log(Physicist.length);
 });
