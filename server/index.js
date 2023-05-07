@@ -1261,6 +1261,7 @@ app.get('/api', (req, res) => {
 // Function to start the game
 function startGame() {
   console.log('🚀 Game started');
+  console.log(`Cards in total: ${Physicist.length}`);
   console.log("Players list:");
   console.log(users);
   player_active = users[0];
@@ -1321,5 +1322,4 @@ function checkWin() {
 // Set the HTTP server to listen on the specified port and log a message when the server starts listening
 http.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
-  console.log(Physicist.length);
 });
