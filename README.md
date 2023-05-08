@@ -5,7 +5,7 @@ It includes a backend server and a front end.
 The backend is a Node.js server and the front end is a React.js application. 
 The communication between server and client takes place with the help of Socket.io.
 
-⚠ I take no responsibility for the data used in the various categories. If you find any errors, please create an issue and point them out.
+⚠ I take no responsibility for the data used in the various categories. If you find any errors, please create an issue and point them out. ⚠ 
 
 ## :rocket: Game concept
 In this version of the quartet, the player with the highest number or value on the card wins. If a player takes a turn and names a value, the player with the highest value wins. This player collects all the cards and adds them to his pile and it is his turn.
