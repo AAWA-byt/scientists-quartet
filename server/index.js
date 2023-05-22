@@ -212,20 +212,19 @@ let Physicist = [
     birth: 1906,
     age: 85,
     iq: 175,
-    h_index: 56,
+    h_index: 0,
     influence: 83,
     wiki: 14051,
   },
-  // New Card 2; need to edit 
   {
-    name: "",
+    name: "Rachel Carson",
     photo: ``,
-    birth: 0,
-    age: 0,
-    iq: 0,
+    birth: 1907,
+    age: 56,
+    iq: 130,
     h_index: 0,
-    influence: 0,
-    wiki: 0,
+    influence: 93,
+    wiki: 62502,
   },
 ];
 
