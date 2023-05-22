@@ -206,6 +206,27 @@ let Physicist = [
     influence: 99,
     wiki: 58005,
   },
+  {
+    name: "Grace Hopper",
+    photo: ``,
+    birth: 1906,
+    age: 85,
+    iq: 175,
+    h_index: 56,
+    influence: 83,
+    wiki: 14051,
+  },
+  // New Card 2; need to edit 
+  {
+    name: "",
+    photo: ``,
+    birth: 0,
+    age: 0,
+    iq: 0,
+    h_index: 0,
+    influence: 0,
+    wiki: 0,
+  },
 ];
 
 // Array for player that lost
