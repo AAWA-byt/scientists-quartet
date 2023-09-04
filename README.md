@@ -75,7 +75,7 @@ Proceed as described above with the files for the web server and the config file
 
 # :construction: Contribute
 ### Pull Request
-You are always welcome to create a [pull request](https://github.com/AAWA-byt/physiker-quartet/pulls). I will look at it as soon as possible. 
+You are always welcome to create a [pull request](https://github.com/AAWA-byt/scientists-quartet/pulls). I will look at it as soon as possible. 
 
 ### Bug Reports / Feature Requests
 
