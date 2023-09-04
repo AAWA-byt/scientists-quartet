@@ -34,7 +34,7 @@ If two cards have the same value, a draw is made. In this case, both cards are p
 
 - Clone the source code with the following command:
 ```
-git clone https://github.com/AAWA-byt/physiker-quartet.git
+git clone https://github.com/AAWA-byt/scientists-quartet.git
 ```
 - Edit the config file ```./server/config.json``` as you need it (here you define the address with which the backend server is allowed to communicate)
 - In the ```./client``` folder you run the following commands:
