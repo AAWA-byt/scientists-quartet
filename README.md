@@ -15,11 +15,12 @@ If two cards have the same value, a draw is made. In this case, both cards are p
 ## :sparkles: Features
 
 - ✅ Quartet game
-- ☑️ Log Games (MySQL)
 - ✅ Live Chat 
 - ✅ User list & user count
 - ✅ User limit
 - ✅ Responsive design
+- ☑️ Log Games (MySQL)
+- ☑️ Multiple games (game rooms with codes)
 
 ## :wrench: How to install
 
