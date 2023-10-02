@@ -20,7 +20,8 @@ If two cards have the same value, a draw is made. In this case, both cards are p
 - ✅ User limit
 - ✅ Responsive design
 - ☑️ Log Games (MySQL)
-- ☑️ Multiple games (game rooms with codes)
+- ☑️ Multiple games (game rooms with keys)
+- ☑️ login system (stats, ...)
 
 ## :wrench: How to install
 
