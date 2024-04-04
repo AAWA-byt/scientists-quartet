@@ -4,6 +4,7 @@ const app = express(); // Create a new instance of the express app
 const PORT = 4000; // Set the port number
 const fs = require('fs'); // Import fs package
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8')); // import origin data from config.json
+const cards = JSON.parse(fs.readFileSync('./components/Cards.json', 'utf-8')); // import cards data from Cards.json
 
 // setup http server
 const http = require('http').Server(app); // Create a new HTTP server using the express app
@@ -20,213 +21,14 @@ const socketIO = require('socket.io')(http, {
 let users = []; // Create an empty array to store the users
 let cards_user_1 = []; // Create an empty array to store user 1 cards
 let cards_user_2 = []; // Create an empty array to store user 2 cards
+let cards_user_3 = []; // Create an empty array to store user 2 cards
+let cards_user_4 = []; // Create an empty array to store user 2 cards
 let player_active = []; // Create an empty array to store active user
 let cards_draw = []; // Create an empty array to store draw cards
 let game_status = []; // Create an empty array to store game status
 
 // Physicist list
-let Physicist = [
-  {
-    name: "Albert Einstein",
-    photo: `https://cms-api.galileo.tv/app/uploads/2019/11/91370791.jpg`,
-    birth: 1879,
-    age: 76,
-    iq: 160,
-    h_index: 62,
-    influence: 95,
-    wiki: 159389,
-  },
-  {
-    name: "Sir Isaac Newton",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg/250px-Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg`,
-    birth: 1643,
-    age: 84,
-    iq: 190,
-    h_index: 0,
-    influence: 85,
-    wiki: 61533,
-  },
-  {
-    name: "Max Planck",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Max_Planck_%281858-1947%29.jpg/220px-Max_Planck_%281858-1947%29.jpg`,
-    birth: 1858,
-    age: 89,
-    iq: 160,
-    h_index: 127,
-    influence: 90,
-    wiki: 87996,
-  },
-  {
-    name: "Erwin Schrödinger",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Erwin_Schr%C3%B6dinger_%281933%29.jpg/220px-Erwin_Schr%C3%B6dinger_%281933%29.jpg`,
-    birth: 1887,
-    age: 73,
-    iq: 140,
-    h_index: 73,
-    influence: 85,
-    wiki: 30266,
-  },
-  {
-    name: "Marie Curie",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Marie_Curie_%28Nobel-Chem%29.jpg/220px-Marie_Curie_%28Nobel-Chem%29.jpg`,
-    birth: 1867,
-    age: 66,
-    iq: 175,
-    h_index: 58,
-    influence: 92,
-    wiki: 82640,
-  },
-  {
-    name: "Ada Lovelace",
-    photo: `https://mujeresconciencia.com/app/uploads/2021/06/Ada_Lovelace_portrait_circa_1840.jpg`,
-    birth: 1815,
-    age: 36,
-    iq: 150,
-    h_index: 0,
-    influence: 90,
-    wiki: 36018,
-  },
-  {
-    name: "Alan Turing",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Alan_Turing_az_1930-as_%C3%A9vekben.jpg/220px-Alan_Turing_az_1930-as_%C3%A9vekben.jpg`,
-    birth: 1912,
-    age: 37,
-    iq: 185,
-    h_index: 27,
-    influence: 99,
-    wiki: 57152,
-  },
-  {
-    name: "Rosalind Franklin",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Rosalind_Franklin_%28retouched%29.jpg/220px-Rosalind_Franklin_%28retouched%29.jpg`,
-    birth: 1920,
-    age: 41,
-    iq: 175,
-    h_index: 0,
-    influence: 96,
-    wiki: 63395,
-  },
-  {
-    name: "Charles Darwin",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Charles_Darwin_portrain_by_John_Collier%2C_1883_copy.jpg/220px-Charles_Darwin_portrain_by_John_Collier%2C_1883_copy.jpg`,
-    birth: 1809,
-    age: 73,
-    iq: 135,
-    h_index: 0,
-    influence: 95,
-    wiki: 83407,
-  },
-  {
-    name: "Jane Goodall",
-    photo: `https://www.upo.es/diario/wp-content/uploads/2019/02/149_2073741.jpg`,
-    birth: 1934,
-    age: 89,
-    iq: 120,
-    h_index: 75,
-    influence: 90,
-    wiki: 24740,
-  },
-  {
-    name: "Hypatia von Alexandria",
-    photo: `https://wir-staerken-maedchen.de/wp-content/uploads/2020/11/Hypatia-1.jpg`,
-    birth: 355,
-    age: 60,
-    iq: 120,
-    h_index: 0,
-    influence: 50,
-    wiki: 53814,
-  },
-  {
-    name: "Sheldon Cooper",
-    photo: `https://www.grazia.fr/wp-content/uploads/grazia/2017/03/The-Big-Bang-Theory-bientot-une-serie-sur-la-jeunesse-de-Sheldon-Cooper.jpeg`,
-    birth: 1980,
-    age: 43,
-    iq: 187,
-    h_index: 83,
-    influence: 100,
-    wiki: 77589,
-  },
-  {
-    name: "Nikola Tesla",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Tesla3.jpg/220px-Tesla3.jpg`,
-    birth: 1856,
-    age: 86,
-    iq: 160,
-    h_index: 0,
-    influence: 80,
-    wiki: 69933,
-  },
-  {
-    name: "Leonardo da Vinci",
-    photo: `https://image.geo.de/30045040/t/FX/v4/w1440/r0/-/38-01-gross-jpg--18921-.jpg`,
-    birth: 1452,
-    age: 67,
-    iq: 160,
-    h_index: 0,
-    influence: 93,
-    wiki: 119805,
-  },
-  {
-    name: "Johannes Kepler",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/JKepler.jpg/220px-JKepler.jpg`,
-    birth: 1571,
-    age: 58,
-    iq: 150,
-    h_index: 0,
-    influence: 91,
-    wiki: 107896,
-  },
-  {
-    name: "Chien-Shiung Wu",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Chien-shiung_Wu_%281912-1997%29_C.jpg/220px-Chien-shiung_Wu_%281912-1997%29_C.jpg`,
-    birth: 1912,
-    age: 84,
-    iq: 160,
-    h_index: 47,
-    influence: 87,
-    wiki: 8386,
-  },
-  {
-    name: "Stephen Hawking",
-    photo: `https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Stephen_Hawking.StarChild.jpg/220px-Stephen_Hawking.StarChild.jpg`,
-    birth: 1942,
-    age: 76,
-    iq: 160,
-    h_index: 99,
-    influence: 90,
-    wiki: 53424,
-  },
-  {
-    name: "Lise Meitner",
-    photo: `https://www.wienerzeitung.at/_em_daten/_cache/image/1x2km9EiulDsQyHYtu9W1ttDgtCBCzqlFQXc8eueXaC_POE80nanucry90-2RVM7QrFwaw0PhY-1J_VSyaRlXPFli3Imi-xTtAEPg8BV67lgQNswAgmp_igQ/181018-1714-948-0900-167609-191029meitner.jpg`,
-    birth: 1878,
-    age: 89,
-    iq: 160,
-    h_index: 0,
-    influence: 99,
-    wiki: 58005,
-  },
-  {
-    name: "Grace Hopper",
-    photo: ``,
-    birth: 1906,
-    age: 85,
-    iq: 175,
-    h_index: 0,
-    influence: 83,
-    wiki: 14051,
-  },
-  {
-    name: "Rachel Carson",
-    photo: ``,
-    birth: 1907,
-    age: 56,
-    iq: 130,
-    h_index: 0,
-    influence: 93,
-    wiki: 62502,
-  },
-];
+let Physicist = cards;
 
 // Array for player that lost
 let game_lost = [
