@@ -1,0 +1,26 @@
+# Top-level orchestration: builds and runs both client (nginx static) and server.
+# Run from repo root:  docker compose up --build
+#
+# Client is served on http://localhost:3000 (matches the CORS origin in
+# server/config.json). Server listens on http://localhost:4000.
+
+services:
+  server:
+    container_name: scientists-quartet-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+  client:
+    container_name: scientists-quartet-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    restart: unless-stopped
