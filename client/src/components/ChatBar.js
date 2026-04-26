@@ -4,10 +4,11 @@ const ChatBar = ({ socket }) => {
   // Define state to hold the list of active users
   const [users, setUsers] = useState([]);
 
-  // Listen for 'newUserResponse' event from server and update state accordingly
   useEffect(() => {
-    socket.on('newUserResponse', (data) => setUsers(data));
-  }, [socket, users]);
+    const onUsers = (data) => setUsers(data);
+    socket.on('newUserResponse', onUsers);
+    return () => socket.off('newUserResponse', onUsers);
+  }, [socket]);
 
   return (
     <div className="chat__sidebar">

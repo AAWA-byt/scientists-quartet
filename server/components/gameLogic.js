@@ -10,6 +10,13 @@ const MOVES = [
   { event: 'NewMove_wiki', attribute: 'wiki', direction: 'higher' },
 ];
 
+const STATUS = {
+  IDLE: '',
+  WAITING: 'Waiting..',
+  ACTIVE: 'Active',
+  GAME_OVER: 'Game Over!',
+};
+
 const PLACEHOLDER = {
   lost: {
     name: 'x',
@@ -28,8 +35,13 @@ const PLACEHOLDER = {
   },
 };
 
+// Fisher-Yates shuffle: uniform distribution, unlike Array.sort with random comparator.
 function shuffleAndSplit(cards) {
-  const shuffled = [...cards].sort(() => Math.random() - 0.5);
+  const shuffled = [...cards];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
   const half = Math.floor(shuffled.length / 2);
   return [shuffled.slice(0, half), shuffled.slice(half)];
 }
@@ -40,7 +52,7 @@ function createGame() {
     cards2: [],
     drawPile: [],
     activePlayer: null,
-    status: '',
+    status: STATUS.IDLE,
     users: [],
   };
 }
@@ -54,7 +66,7 @@ function dealCards(game, allCards) {
 
 function startGame(game) {
   game.activePlayer = game.users[0];
-  game.status = 'Active';
+  game.status = STATUS.ACTIVE;
 }
 
 // Player wins the trick: collect any pending draw cards, take the opponent's
@@ -95,19 +107,19 @@ function checkWin(game) {
   if (empty1 && empty2) {
     game.cards1 = [PLACEHOLDER.draw];
     game.cards2 = [PLACEHOLDER.draw];
-    game.status = 'Game Over!';
+    game.status = STATUS.GAME_OVER;
     return true;
   }
   if (empty2) {
     game.cards1 = [PLACEHOLDER.won];
     game.cards2 = [PLACEHOLDER.lost];
-    game.status = 'Game Over!';
+    game.status = STATUS.GAME_OVER;
     return true;
   }
   if (empty1) {
     game.cards1 = [PLACEHOLDER.lost];
     game.cards2 = [PLACEHOLDER.won];
-    game.status = 'Game Over!';
+    game.status = STATUS.GAME_OVER;
     return true;
   }
   return false;
@@ -115,6 +127,7 @@ function checkWin(game) {
 
 module.exports = {
   MOVES,
+  STATUS,
   createGame,
   dealCards,
   startGame,

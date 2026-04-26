@@ -11,10 +11,11 @@ const Home = ({ socket }) => {
   // Define state to hold the list of active users
   const [users, setUsers] = useState([]);
 
-  // Listen for 'newUserResponse' event from server and update state accordingly
   useEffect(() => {
-    socket.on('newUserResponse', (data) => setUsers(data));
-  }, [socket, users]);
+    const onUsers = (data) => setUsers(data);
+    socket.on('newUserResponse', onUsers);
+    return () => socket.off('newUserResponse', onUsers);
+  }, [socket]);
 
   // Call the "useState" hook from the React library to create a state variable called "userName" and a function called "setUserName" to update it
   const [userName, setUserName] = useState('');

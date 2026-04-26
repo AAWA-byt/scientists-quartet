@@ -1,5 +1,6 @@
 const {
   MOVES,
+  STATUS,
   createGame,
   dealCards,
   startGame,
@@ -10,6 +11,12 @@ const {
 function broadcastHands(io, game) {
   io.emit('send_first-user', game.cards1);
   io.emit('send_second-user', game.cards2);
+}
+
+function resetForRejoin(game, allCards) {
+  dealCards(game, allCards);
+  game.activePlayer = null;
+  game.status = game.users.length === 1 ? STATUS.WAITING : STATUS.IDLE;
 }
 
 function registerHandlers(io, allCards) {
@@ -28,7 +35,7 @@ function registerHandlers(io, allCards) {
       if (game.users.length === 1) {
         console.log('⬆️: Players; 0 -> 1');
         dealCards(game, allCards);
-        game.status = 'Waiting..';
+        game.status = STATUS.WAITING;
         io.emit('new_GameStatus', game.status);
       } else if (game.users.length === 2) {
         console.log('⬆️: Players: 1 -> 2');
@@ -48,13 +55,29 @@ function registerHandlers(io, allCards) {
 
     socket.on('disconnect', () => {
       console.log('🔥: A user disconnected');
+      const wasActive = game.status === STATUS.ACTIVE;
       game.users = game.users.filter((user) => user.socketID !== socket.id);
       io.emit('newUserResponse', game.users);
-      socket.disconnect();
+
+      if (wasActive && game.users.length < 2) {
+        resetForRejoin(game, allCards);
+        broadcastHands(io, game);
+        io.emit('player-active', game.activePlayer);
+        io.emit('new_GameStatus', game.status);
+        console.log('♻️: Game reset after mid-game disconnect');
+      }
     });
 
     MOVES.forEach(({ event, attribute, direction }) => {
       socket.on(event, () => {
+        // Reject moves from anyone but the active player.
+        if (!game.activePlayer || socket.id !== game.activePlayer.socketID) {
+          return;
+        }
+        if (game.status !== STATUS.ACTIVE) {
+          return;
+        }
+
         const previousActive = game.activePlayer;
         resolveMove(game, attribute, direction);
         broadcastHands(io, game);

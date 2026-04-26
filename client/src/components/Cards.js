@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGameSocket } from '../hooks/useGameSocket';
+import { STATUS } from '../constants/gameStatus';
 
 // Stat IDs match the original markup; see git history for the typos
 // (`stats_influence` for h-index, `stats_assets` for influence) — preserved
@@ -14,10 +15,19 @@ const STATS = [
   { event: 'NewMove_wiki',      key: 'wiki',      label: 'Wikifactor', icon: '📚', statsId: 'stats_wiki',      btnId: 'btn_wiki' },
 ];
 
+const NOTICE_TIMEOUT_MS = 2500;
+
 const Cards = ({ socket }) => {
   const { users, myCards, playerActive, gameStatus } = useGameSocket(socket);
   const navigate = useNavigate();
+  const [notice, setNotice] = useState('');
   const topCard = myCards[0];
+
+  useEffect(() => {
+    if (!notice) return undefined;
+    const id = setTimeout(() => setNotice(''), NOTICE_TIMEOUT_MS);
+    return () => clearTimeout(id);
+  }, [notice]);
 
   const handleLeaveGame = () => {
     localStorage.removeItem('userName');
@@ -27,12 +37,12 @@ const Cards = ({ socket }) => {
   };
 
   const handleMove = (event) => {
-    if (playerActive.userName !== localStorage.getItem('userName')) {
-      alert('It is not your turn! Please wait.');
+    if (gameStatus === STATUS.GAME_OVER) {
+      setNotice('The game is over.');
       return;
     }
-    if (gameStatus === 'Game Over!') {
-      alert('The game is over.');
+    if (playerActive.userName !== localStorage.getItem('userName')) {
+      setNotice('It is not your turn! Please wait.');
       return;
     }
     socket.emit(event);
@@ -58,6 +68,9 @@ const Cards = ({ socket }) => {
 
       <div className='cards__container'>
         <h1>Current card</h1>
+        {notice && (
+          <div role='status' className='cards__notice'>{notice}</div>
+        )}
         <div className='cards__wrapper'>
           <div className='image_container'>
             <img src={topCard && topCard.photo} alt="img" />

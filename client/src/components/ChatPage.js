@@ -15,20 +15,20 @@ const ChatPage = ({ socket }) => {
     // Declare a ref using the useRef hook to reference the last message in the chat
     const lastMessageRef = useRef(null);
 
-    // Use the useEffect hook to update the "messages" state whenever a new message is received from the server
     useEffect(() => {
-        socket.on('messageResponse', (data) => setMessages([...messages, data]));
-    }, [socket, messages]);
+        const onMessage = (data) => setMessages((prev) => [...prev, data]);
+        const onTyping = (data) => setTypingStatus(data);
+        socket.on('messageResponse', onMessage);
+        socket.on('typingResponse', onTyping);
+        return () => {
+            socket.off('messageResponse', onMessage);
+            socket.off('typingResponse', onTyping);
+        };
+    }, [socket]);
 
-    // Use the useEffect hook to scroll to the bottom of the chat every time a new message is added
     useEffect(() => {
         lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
-
-    // Use the useEffect hook to update the "typingStatus" state whenever a new typing status is received from the server
-    useEffect(() => {
-        socket.on('typingResponse', (data) => setTypingStatus(data));
-    }, [socket]);
 
     // Render the ChatBar, ChatBody, and ChatFooter components along with their respective props
     return (

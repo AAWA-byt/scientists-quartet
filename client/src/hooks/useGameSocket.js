@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 
 // Subscribes to all game-related socket events and exposes derived state.
-// `myCards` is selected based on the userID stored in localStorage.
+// `userID` is tracked as React state (initialised from localStorage) so that
+// `myCards` recomputes reactively when the role is assigned.
 export function useGameSocket(socket) {
   const [users, setUsers] = useState([]);
   const [cards1, setCards1] = useState([]);
   const [cards2, setCards2] = useState([]);
   const [playerActive, setPlayerActive] = useState({});
   const [gameStatus, setGameStatus] = useState('');
+  const [userID, setUserID] = useState(() => localStorage.getItem('userID'));
 
   useEffect(() => {
     socket.emit('first-user');
@@ -27,16 +29,19 @@ export function useGameSocket(socket) {
   }, [socket]);
 
   useEffect(() => {
-    if (users.length === 1 && !localStorage.getItem('userID')) {
+    if (userID) return;
+    if (users.length === 1) {
       localStorage.setItem('userID', '1');
+      setUserID('1');
       socket.emit('first-user');
-    } else if (users.length === 2 && !localStorage.getItem('userID')) {
+    } else if (users.length === 2) {
       localStorage.setItem('userID', '2');
+      setUserID('2');
       socket.emit('second-user');
     }
-  }, [socket, users]);
+  }, [socket, users, userID]);
 
-  const myCards = localStorage.getItem('userID') === '2' ? cards2 : cards1;
+  const myCards = userID === '2' ? cards2 : cards1;
 
   return { users, myCards, playerActive, gameStatus };
 }
