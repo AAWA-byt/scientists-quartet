@@ -8,6 +8,8 @@ const {
   checkWin,
 } = require('./gameLogic');
 
+const MAX_PLAYERS = 2;
+
 function broadcastHands(io, game) {
   io.emit('send_first-user', game.cards1);
   io.emit('send_second-user', game.cards2);
@@ -29,7 +31,23 @@ function registerHandlers(io, allCards) {
     socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
 
     socket.on('newUser', (data) => {
-      game.users.push(data);
+      // Reject silently if game is already full or this socket is already a player.
+      if (game.users.length >= MAX_PLAYERS) {
+        socket.emit('newUser-rejected', { reason: 'full' });
+        return;
+      }
+      if (game.users.some((u) => u.socketID === socket.id)) {
+        return;
+      }
+
+      const userName = typeof data?.userName === 'string' ? data.userName : 'anon';
+      // Server-controlled identity: never trust client-supplied socketID.
+      const user = { userName, socketID: socket.id };
+      game.users.push(user);
+
+      const role = String(game.users.length); // '1' or '2'
+      socket.emit('role-assigned', { role });
+
       io.emit('newUserResponse', game.users);
 
       if (game.users.length === 1) {
@@ -37,7 +55,7 @@ function registerHandlers(io, allCards) {
         dealCards(game, allCards);
         game.status = STATUS.WAITING;
         io.emit('new_GameStatus', game.status);
-      } else if (game.users.length === 2) {
+      } else if (game.users.length === MAX_PLAYERS) {
         console.log('⬆️: Players: 1 -> 2');
         startGame(game);
         console.log('🚀 Game started');
@@ -50,27 +68,39 @@ function registerHandlers(io, allCards) {
       }
     });
 
-    socket.on('first-user', () => socket.emit('send_first-user', game.cards1));
-    socket.on('second-user', () => socket.emit('send_second-user', game.cards2));
+    function ensureAuthorisedFor(role) {
+      const expected = game.users[role === '1' ? 0 : 1];
+      return expected && expected.socketID === socket.id;
+    }
+
+    socket.on('first-user', () => {
+      if (!ensureAuthorisedFor('1')) return;
+      socket.emit('send_first-user', game.cards1);
+    });
+    socket.on('second-user', () => {
+      if (!ensureAuthorisedFor('2')) return;
+      socket.emit('send_second-user', game.cards2);
+    });
 
     socket.on('disconnect', () => {
       console.log('🔥: A user disconnected');
-      const wasActive = game.status === STATUS.ACTIVE;
+      const wasPlayer = game.users.some((u) => u.socketID === socket.id);
       game.users = game.users.filter((user) => user.socketID !== socket.id);
       io.emit('newUserResponse', game.users);
 
-      if (wasActive && game.users.length < 2) {
+      // Reset deck whenever a player leaves and we drop below the threshold,
+      // so a returning player doesn't inherit a finished or partial game.
+      if (wasPlayer && game.users.length < MAX_PLAYERS) {
         resetForRejoin(game, allCards);
         broadcastHands(io, game);
         io.emit('player-active', game.activePlayer);
         io.emit('new_GameStatus', game.status);
-        console.log('♻️: Game reset after mid-game disconnect');
+        console.log('♻️: Game reset after player left');
       }
     });
 
     MOVES.forEach(({ event, attribute, direction }) => {
       socket.on(event, () => {
-        // Reject moves from anyone but the active player.
         if (!game.activePlayer || socket.id !== game.activePlayer.socketID) {
           return;
         }
@@ -94,4 +124,4 @@ function registerHandlers(io, allCards) {
   });
 }
 
-module.exports = { registerHandlers };
+module.exports = { registerHandlers, MAX_PLAYERS };

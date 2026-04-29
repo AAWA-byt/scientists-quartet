@@ -1,15 +1,11 @@
-// Import the required modules from the React and react-router-dom libraries
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Define a functional component called "Home" that takes in a socket object as a prop
 const Home = ({ socket }) => {
-
-  // Call the "useNavigate" hook from the react-router-dom library to obtain a navigation object
   const navigate = useNavigate();
-
-  // Define state to hold the list of active users
   const [users, setUsers] = useState([]);
+  const [userName, setUserName] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const onUsers = (data) => setUsers(data);
@@ -17,21 +13,28 @@ const Home = ({ socket }) => {
     return () => socket.off('newUserResponse', onUsers);
   }, [socket]);
 
-  // Call the "useState" hook from the React library to create a state variable called "userName" and a function called "setUserName" to update it
-  const [userName, setUserName] = useState('');
-
-  // Define a function called "handleSubmit" that takes in an event object and prevents its default behavior
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Store the username in the browser's local storage
-    localStorage.setItem('userName', userName);
-    // Emit a "newUser" event to the Node.js server with the username and the socket ID
-    socket.emit('newUser', { userName, socketID: socket.id });
-    // Navigate to the chat page
-    navigate('/game');
+    setError('');
+
+    const onAssigned = ({ role }) => {
+      socket.off('role-assigned', onAssigned);
+      socket.off('newUser-rejected', onRejected);
+      localStorage.setItem('userName', userName);
+      localStorage.setItem('userID', role);
+      navigate('/game');
+    };
+    const onRejected = ({ reason }) => {
+      socket.off('role-assigned', onAssigned);
+      socket.off('newUser-rejected', onRejected);
+      setError(reason === 'full' ? 'Game is already full.' : 'Could not join game.');
+    };
+
+    socket.on('role-assigned', onAssigned);
+    socket.on('newUser-rejected', onRejected);
+    socket.emit('newUser', { userName });
   };
 
-  // Render a form with a header, a label, an input field for the username, and a button if there are less than two users
   if (users.length < 2) {
     return (
       <div className='home'>
@@ -50,18 +53,17 @@ const Home = ({ socket }) => {
             onChange={(e) => setUserName(e.target.value)}
           />
           <button>SIGN IN</button>
+          {error && <p role='alert' className='home__error'>{error}</p>}
           <p>There is still room for more players.</p>
         </form>
       </div>
     );
-  } else { // Render a message if there are already two users
-    return (
-      <div className='home'>
-      <h1>The maximum number of players has been reached</h1>
-      </div>
-    );
   }
+  return (
+    <div className='home'>
+      <h1>The maximum number of players has been reached</h1>
+    </div>
+  );
 };
 
-// Export the "Home" component as the default export of this module
 export default Home;
